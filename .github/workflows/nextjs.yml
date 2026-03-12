@@ -55,7 +55,8 @@ jobs:
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        env: ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true
+        env:
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
         with:
           node-version: '24'
           # Automatically inject basePath in your Next.js configuration file and disable
