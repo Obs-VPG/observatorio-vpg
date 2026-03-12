@@ -84,7 +84,6 @@ export function MainMap({ selectedPoint, setSelectedPoint }: MainMapProps) {
           </MapPopup>
         )}
         <MapControls />
-        {/* <MapController setPopup={setSelectedPoint} /> */}
       </Map>
     </section>
   );
