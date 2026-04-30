@@ -20,8 +20,12 @@ export const DefinedTerms: CollectionConfig = {
       name: 'additionalType',
       type: 'select',
       options: [
-        { label: 'Intersecção', value: 'intersecction' },
-        { label: 'Tipo de Conflito', value: 'conflictType' }
+        { label: 'Intersecção', value: 'intersection' },
+        { label: 'Tipo de Violência', value: 'offenseType' },
+        { label: 'Atores', value: 'actors' },
+        { label: 'Identidade de gênero', value: 'genderIdentity' },
+        { label: 'Identidade étnico-racial', value: 'racialIdentity' },
+        { label: 'Faixa etária', value: 'ageGroup' }
       ],
       required: true
     }

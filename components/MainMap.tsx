@@ -7,8 +7,8 @@ import {
   MapPopup,
   MapRef
 } from '@/components/ui/map';
-import fakeData from '@/lib/ejatlasData.json';
 import mapStyle from '@/lib/mapStyle.json';
+import type { GeoJSON } from 'geojson';
 import { Dispatch, SetStateAction, useCallback, useState } from 'react';
 import { DataPointInterface } from './MainWrapper';
 
@@ -23,25 +23,19 @@ type MainMapProps = {
       properties: DataPointInterface;
     } | null>
   >;
+  data: GeoJSON;
 };
 
-export function MainMap({ selectedPoint, setSelectedPoint }: MainMapProps) {
+export function MainMap({
+  selectedPoint,
+  setSelectedPoint,
+  data
+}: MainMapProps) {
   const [ref, setRef] = useState<MapRef | null>(null);
   const measuredRef = useCallback((node: any) => {
     setRef(node);
   }, []);
 
-  let data = {
-    ...fakeData,
-    features: [
-      ...(fakeData as any).features.filter(
-        (feat: any) =>
-          feat?.geometry?.coordinates?.length === 2 &&
-          !isNaN(feat?.geometry?.coordinates[0]) &&
-          !isNaN(feat?.geometry?.coordinates[1])
-      )
-    ]
-  };
   return (
     <section className="w-full h-full border border-dashed">
       <Map

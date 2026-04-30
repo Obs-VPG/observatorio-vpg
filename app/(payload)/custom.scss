@@ -34,6 +34,34 @@
   --color-trinidad-900: #792915;
   --color-trinidad-950: #411209;
   --color-destructive: #ff0000;
+  --color-yellow-orange-50: #fff7eb;
+  --color-yellow-orange-100: #fee9c7;
+  --color-yellow-orange-200: #fed289;
+  --color-yellow-orange-300: #fdac39;
+  --color-yellow-orange-400: #fc9923;
+  --color-yellow-orange-500: #f77409;
+  --color-yellow-orange-600: #da5105;
+  --color-yellow-orange-700: #b53408;
+  --color-yellow-orange-800: #93280d;
+  --color-yellow-orange-900: #79220e;
+  --color-yellow-orange-950: #450e03;
+  --color-yellow-orange: var(--color-yellow-orange-300);
+  --color-everglade-50: #effaf5;
+  --color-everglade-100: #d8f3e5;
+  --color-everglade-200: #b5e5ce;
+  --color-everglade-300: #84d1b1;
+  --color-everglade-400: #51b690;
+  --color-everglade-500: #2f9a75;
+  --color-everglade-600: #1f7c5e;
+  --color-everglade-700: #19634d;
+  --color-everglade-800: #164f3e;
+  --color-everglade-900: #123d31;
+  --color-everglade-950: #0a241d;
+  --color-everglade: var(--color-everglade-900);
+  --color-light-green: #e9f3ef;
+  --color-gray: #626262;
+  --color-black: #1c1e1d;
+  --color-white: #f5f5f5;
 }
 
 html {
@@ -79,8 +107,8 @@ td.cell-image {
 }
 
 .btn.btn--style-primary {
-  background-color: var(--color-trinidad-600);
-  color: white;
+  background-color: var(--color-yellow-orange);
+  color: var(--color-black);
   &.btn--disabled {
     opacity: 0.5;
   }
@@ -91,5 +119,5 @@ td.cell-image {
   font-size: 12px;
   letter-spacing: 0.025rem;
   font-weight: 500;
-  color: var(--color-trinidad-600);
+  color: var(--color-everglade);
 }

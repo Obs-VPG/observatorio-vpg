@@ -9,6 +9,8 @@ import { Users } from './collections/Users';
 import { en } from '@payloadcms/translations/languages/en';
 import { pt } from '@payloadcms/translations/languages/pt';
 import { DefinedTerms } from './collections/DefinedTerms';
+import { Cases } from './collections/Cases';
+import { Persons } from './collections/Persons';
 
 export default buildConfig({
   maxDepth: 3,
@@ -22,14 +24,14 @@ export default buildConfig({
             prefillOnly: true
           }
         : false,
-    // components: {
-    //   beforeDashboard: ['@/components/payload/BeforeDashboard'],
-    //   graphics: {
-    //     Icon: '@/components/payload/PayloadIcon',
-    //     Logo: '@/components/payload/PayloadLogo'
-    //   },
-    //   Nav: '@/components/payload/Nav#Nav'
-    // },
+    components: {
+      // beforeDashboard: ['@/components/payload/BeforeDashboard'],
+      graphics: {
+        Icon: '@/components/payload/PayloadIcon',
+        Logo: '@/components/payload/PayloadLogo'
+      }
+      // Nav: '@/components/payload/Nav#Nav'
+    },
     meta: {
       title: 'Painel de administração',
       titleSuffix: ' - Observatório de Violência Política de Gênero',
@@ -50,7 +52,7 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   globals: [],
-  collections: [DefinedTerms, Users],
+  collections: [Cases, DefinedTerms, Users, Persons],
   secret: process.env.PAYLOAD_SECRET || '',
   db: mongooseAdapter({
     // Mongoose-specific arguments go here.
