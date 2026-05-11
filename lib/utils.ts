@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function casesToGeoJSON(cases: Case[]) {
+export function casesToGeoJSON(cases: Partial<Case>[]) {
   return {
     type: 'FeatureCollection',
     crs: {

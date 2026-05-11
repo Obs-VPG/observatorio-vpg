@@ -1,16 +1,18 @@
-'use client';
+"use client";
 
-import Logo from '@/components/Logo';
-import { MainMap } from '@/components/MainMap';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { casesToGeoJSON, cn } from '@/lib/utils';
-import { MenuIcon, X } from 'lucide-react';
-import { useState } from 'react';
-import Logos from './Logos';
-import Nav from './Nav';
-import { Case } from '@/payload-types';
-import CaseInfo from './CaseInfo';
-import MapComponent from './Map';
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
+import { Case } from "@/payload-types";
+import { distance } from "@turf/distance";
+import { point } from "@turf/helpers";
+import { useEffect, useRef, useState } from "react";
+import { MapProvider } from "react-map-gl/maplibre";
+import CaseList from "./CaseList";
+import Logos from "./Logos";
+import MapComponent from "./Map";
+import { Button } from "./ui/button";
+import { List, MapIcon } from "lucide-react";
+import Search from "./Search";
 
 export interface DataPointInterface {
   id: number;
@@ -29,74 +31,98 @@ export interface DataPointInterface {
   type: string[];
 }
 export type MainWrapperProps = {
-  cases: Case[];
+  cases: Partial<Case>[];
 };
 
 export default function MainWrapper({ cases }: MainWrapperProps) {
-  const [showMap, useShowMap] = useState(true);
-  const [selectedPoint, setSelectedPoint] = useState<Case | null>(null);
-  return (
-    <div className="md:flex h-svh">
-      <div className="md:hidden p-3 pb-0">
-        <Nav />
-      </div>
-      <div
-        className={cn(
-          'w-full md:w-1/2 lg:w-2/5 max-w-xl shrink-0 bg-everglade-50',
-          showMap && 'hidden md:block'
-        )}
-      >
-        <ScrollArea className="h-svh w-full border-l p-3">
-          <div className="grid gap-2">
-            <div className={cn('w-full border border-dashed p-4  bg-white')}>
-              <Logo className="w-full max-w-sm" />
-              {/* <h1 className="font-medium text-2xl text-foreground mb-2">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              </h1> */}
-              <p className="font-normal text-muted-foreground">
-                Suscipit nesciunt alias necessitatibus molestias vero quas quae
-                rem nihil at corrupti assumenda maiores nisi eius iste obcaecati
-                aspernatur enim.
-              </p>
-            </div>
-            <div className="w-full border border-dashed p-4 grid gap-8 bg-white relative">
-              {cases?.map((CASE, index) => {
-                return (
-                  <div
-                    key={`list-${CASE.id}-${index}`}
-                    className=""
-                    onMouseEnter={() => setSelectedPoint(CASE)}
-                    onMouseLeave={() => setSelectedPoint(null)}
-                  >
-                    <CaseInfo data={CASE} size="md" />
-                  </div>
-                );
-              })}
-            </div>
-            <p className="uppercase text-xs tracking-widest mt-3 mx-2 relative z-3 text-muted-foreground">
-              Realização
-            </p>
-            <div className="border border-dashed p-4 px-1 bg-white relative overflow-hidden">
-              <div className="absolute left-1 top-0 h-full w-36 bg-linear-to-r from-white to-transparent z-2 pointer-events-none"></div>
-              <div className="absolute right-1 top-0 h-full w-36 bg-linear-to-l from-white to-transparent z-2 pointer-events-none"></div>
-              <Logos />
-            </div>
-          </div>
-        </ScrollArea>
-      </div>
+  const scrollAreaRef = useRef<HTMLDivElement | null>(null);
+  const [showMap, setShowMap] = useState(false);
+  const [selectedPoint, setSelectedPoint] = useState<Partial<Case> | null>(
+    null,
+  );
+  const [sorteredCases, setSorteredCases] = useState<Partial<Case>[]>([]);
+  useEffect(() => {
+    setSorteredCases(cases);
+  }, [cases]);
+  const onSortCases = (center: { lng: number; lat: number }) => {
+    const centerPoint = point([center.lng, center.lat]);
 
-      <div className="w-full h-[calc(100svh-94px)] md:h-full p-3">
-        <MapComponent
-          selectedPoint={selectedPoint}
-          setSelectedPoint={setSelectedPoint}
-          data={cases}
-        />
-        {/* <MainMap
-          selectedPoint={selectedPoint}
-          setSelectedPoint={setSelectedPoint}
-          data={casesToGeoJSON(cases)}
-        /> */}
+    const sortedCases = [...cases].sort((a, b) => {
+      const distA = distance(centerPoint, point(a.geo as [number, number]));
+      const distB = distance(centerPoint, point(b.geo as [number, number]));
+      return distA - distB; // ascending
+    });
+    setSorteredCases(sortedCases);
+    const viewport = scrollAreaRef.current?.querySelector(
+      "[data-radix-scroll-area-viewport]",
+    );
+
+    viewport?.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+  };
+  return (
+    <MapProvider>
+      <Button
+        className="absolute bottom-3 left-3 z-99 md:hidden"
+        onClick={() => setShowMap((prev) => !prev)}
+      >
+        {showMap ? (
+          <>
+            Exibit Lista <List />
+          </>
+        ) : (
+          <>
+            Exibir Mapa <MapIcon />
+          </>
+        )}
+      </Button>
+      <div className="bg-light-green md:flex">
+        {/* Map */}
+        <div
+          className={cn(
+            "h-[calc(100svh-4rem)] w-full",
+            !showMap && "hidden md:block",
+          )}
+        >
+          <MapComponent
+            selectedPoint={selectedPoint}
+            setSelectedPoint={setSelectedPoint}
+            data={cases}
+            sortCases={onSortCases}
+          />
+        </div>
+
+        {/* Cases List */}
+        <div
+          className={cn(
+            "w-full max-w-3xl shrink-0 md:w-1/2",
+            showMap && "hidden md:block",
+          )}
+        >
+          <ScrollArea
+            ref={scrollAreaRef}
+            className="h-[calc(100svh-4rem)] w-full border-l"
+          >
+            <div className="grid bg-white">
+              <Search />
+              <CaseList
+                cases={sorteredCases}
+                setSelectedPoint={setSelectedPoint}
+              />
+              <p className="text-muted-foreground relative z-3 mt-8 mb-3 px-6 text-xs tracking-widest uppercase">
+                Realização
+              </p>
+              <div className="border-everglade/5 relative overflow-hidden bg-white p-4 px-1">
+                <div className="pointer-events-none absolute top-0 left-1 z-2 h-full w-36 bg-linear-to-r from-white to-transparent"></div>
+                <div className="pointer-events-none absolute top-0 right-1 z-2 h-full w-36 bg-linear-to-l from-white to-transparent"></div>
+                <Logos />
+              </div>
+            </div>
+          </ScrollArea>
+        </div>
       </div>
-    </div>
+    </MapProvider>
   );
 }

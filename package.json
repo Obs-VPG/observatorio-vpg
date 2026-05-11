@@ -19,6 +19,8 @@
     "@payloadcms/translations": "^3.84.1",
     "@payloadcms/ui": "^3.84.1",
     "@react-google-maps/api": "^2.20.8",
+    "@turf/distance": "^7.3.5",
+    "@turf/helpers": "^7.3.5",
     "@types/geojson": "^7946.0.16",
     "@uidotdev/usehooks": "^2.4.1",
     "add": "^2.0.6",
@@ -37,6 +39,7 @@
     "react-dom": "19.2.3",
     "react-fast-marquee": "^1.6.5",
     "react-map-gl": "^8.1.1",
+    "react-player": "^3.4.0",
     "shadcn": "^4.6.0",
     "sharp": "^0.34.5",
     "tailwind-merge": "^3.5.0",
@@ -50,6 +53,8 @@
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.1.6",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4.2.4",
     "typescript": "^5.9.3"
   }

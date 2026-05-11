@@ -165,7 +165,7 @@
     border-radius: 0 !important;
   }
   .maplibregl-popup-close-button {
-    @apply border  absolute right-0 top-0 size-5! rounded-xs!  bg-yellow-orange! -translate-y-1 translate-x-1 hover:bg-yellow-orange-400! font-bold flex items-center justify-center text-lg pb-1;
+    @apply border  absolute right-0! top-0! size-5! rounded-xs!  bg-yellow-orange!  hover:bg-yellow-orange-400! font-bold flex items-center justify-center text-lg pb-1;
   }
   /* .maplibregl-popup-tip {
     @apply hidden!;

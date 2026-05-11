@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    pages: Page;
     cases: Case;
     definedTerms: DefinedTerm;
     users: User;
@@ -78,6 +79,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    pages: PagesSelect<false> | PagesSelect<true>;
     cases: CasesSelect<false> | CasesSelect<true>;
     definedTerms: DefinedTermsSelect<false> | DefinedTermsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -122,6 +124,53 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Página de conteúdo
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: string;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  content?:
+    | (
+        | {
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richTextBlock';
+          }
+        | {
+            size?: ('P' | 'M' | 'G') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'spacerBlock';
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cases".
  */
@@ -145,10 +194,12 @@ export interface Case {
    * Marque, dentre as opções, de qual(is) forma(s) a violência se deu.
    */
   offenseType?: (string | DefinedTerm)[] | null;
+  typeNames?: string[] | null;
   /**
    * Marque, dentre as opções, quais são as intersecções envolvidas no conflito.
    */
   intersections?: (string | DefinedTerm)[] | null;
+  intersectionNames?: string[] | null;
   sphere: 'Pessoalmente' | 'Meio Digital' | 'Ambos' | 'Outro';
   /**
    * Descreva em que âmbito ocorreu o conflito.
@@ -166,6 +217,7 @@ export interface Case {
   dateAccuracy?: ('day' | 'month' | 'year') | null;
   isActive?: boolean | null;
   actors?: (string | DefinedTerm)[] | null;
+  actorNames?: string[] | null;
   refs?:
     | {
         description: string;
@@ -264,6 +316,10 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
+        relationTo: 'pages';
+        value: string | Page;
+      } | null)
+    | ({
         relationTo: 'cases';
         value: string | Case;
       } | null)
@@ -323,6 +379,35 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  content?:
+    | T
+    | {
+        richTextBlock?:
+          | T
+          | {
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+        spacerBlock?:
+          | T
+          | {
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cases_select".
  */
 export interface CasesSelect<T extends boolean = true> {
@@ -332,7 +417,9 @@ export interface CasesSelect<T extends boolean = true> {
   victim?: T;
   description?: T;
   offenseType?: T;
+  typeNames?: T;
   intersections?: T;
+  intersectionNames?: T;
   sphere?: T;
   sphereOther?: T;
   geo?: T;
@@ -341,6 +428,7 @@ export interface CasesSelect<T extends boolean = true> {
   dateAccuracy?: T;
   isActive?: T;
   actors?: T;
+  actorNames?: T;
   refs?:
     | T
     | {

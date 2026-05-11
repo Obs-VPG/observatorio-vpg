@@ -37,7 +37,7 @@ export function MainMap({
   }, []);
 
   return (
-    <section className="w-full h-full border border-dashed">
+    <section className="w-full h-full">
       <Map
         ref={measuredRef}
         center={[-47.882778, -15.793889]}

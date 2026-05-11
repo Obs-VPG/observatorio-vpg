@@ -1,22 +1,12 @@
-import MainWrapper from '@/components/MainWrapper';
-import { Metadata } from 'next';
-import { getPayload } from 'payload';
-import config from '@payload-config';
+import config from "@payload-config";
+import { Metadata } from "next";
+import { getPayload } from "payload";
 
 const payload = await getPayload({ config });
 
 export const metadata: Metadata = {
-  title: 'Observatório de Violência Política de Gênero'
+  title: "Observatório de Violência Política de Gênero",
 };
 export default async function Page() {
-  const casesData = await payload.find({
-    collection: 'cases',
-    pagination: false,
-    depth: 2
-  });
-  return (
-    <>
-      <MainWrapper cases={casesData.docs} />
-    </>
-  );
+  return <></>;
 }
