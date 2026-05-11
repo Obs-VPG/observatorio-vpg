@@ -58,7 +58,10 @@ export default buildConfig({
   db: mongooseAdapter({
     // Mongoose-specific arguments go here.
     // URL is required.
-    url: process.env.DATABASE_URL || "",
+    url:
+      process.env.NODE_ENV === "production"
+        ? process.env.DATABASE_URL || ""
+        : process.env.DATABASE_URL_DEV || "",
   }),
   //   email: resendAdapter({
   //     defaultFromAddress: 'onboarding@resend.dev',

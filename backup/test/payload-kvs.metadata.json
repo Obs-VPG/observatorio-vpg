@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"key":{"key":{"$numberInt":"1"}},"name":"key_1","background":true,"unique":true}],"uuid":"f2385b8852a6479b97791fd1140d3fb4","collectionName":"payload-kvs","type":"collection"}
