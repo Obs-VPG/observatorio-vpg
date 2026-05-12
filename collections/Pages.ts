@@ -10,6 +10,13 @@ export const Pages: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     description: "Página de conteúdo",
+    components: {
+      edit: {
+        beforeDocumentControls: [
+          "@/components/payload/ui/BeforeControls#VisitContent",
+        ],
+      },
+    },
   },
   fields: [
     nameField,

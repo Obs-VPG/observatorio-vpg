@@ -30,11 +30,11 @@ export interface DataPointInterface {
   company: string[];
   type: string[];
 }
-export type MainWrapperProps = {
+export type MapPageProps = {
   cases: Partial<Case>[];
 };
 
-export default function MainWrapper({ cases }: MainWrapperProps) {
+export default function MapPage({ cases }: MapPageProps) {
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
   const [showMap, setShowMap] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<Partial<Case> | null>(
@@ -106,7 +106,7 @@ export default function MainWrapper({ cases }: MainWrapperProps) {
             className="h-[calc(100svh-4rem)] w-full border-l"
           >
             <div className="grid bg-white">
-              <Search />
+              {/* <Search /> */}
               <CaseList
                 cases={sorteredCases}
                 setSelectedPoint={setSelectedPoint}

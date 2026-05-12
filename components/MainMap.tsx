@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
 import {
   Map,
   MapClusterLayer,
   MapControls,
   MapPopup,
-  MapRef
-} from '@/components/ui/map';
-import mapStyle from '@/lib/mapStyle.json';
-import type { GeoJSON } from 'geojson';
-import { Dispatch, SetStateAction, useCallback, useState } from 'react';
-import { DataPointInterface } from './MainWrapper';
+  MapRef,
+} from "@/components/ui/map";
+import mapStyle from "@/lib/mapStyle.json";
+import type { GeoJSON } from "geojson";
+import { Dispatch, SetStateAction, useCallback, useState } from "react";
+import { DataPointInterface } from "./MapPage";
 
 type MainMapProps = {
   selectedPoint: {
@@ -29,7 +29,7 @@ type MainMapProps = {
 export function MainMap({
   selectedPoint,
   setSelectedPoint,
-  data
+  data,
 }: MainMapProps) {
   const [ref, setRef] = useState<MapRef | null>(null);
   const measuredRef = useCallback((node: any) => {
@@ -37,7 +37,7 @@ export function MainMap({
   }, []);
 
   return (
-    <section className="w-full h-full">
+    <section className="h-full w-full">
       <Map
         ref={measuredRef}
         center={[-47.882778, -15.793889]}
@@ -49,13 +49,13 @@ export function MainMap({
           data={data as any}
           clusterRadius={80}
           clusterMaxZoom={4}
-          clusterColors={['#1c1e1d', '#123d31', '#FDAC39']}
+          clusterColors={["#1c1e1d", "#123d31", "#FDAC39"]}
           clusterThresholds={[5, 20]}
           pointColor="#123d31"
           onPointClick={(feature, coordinates) => {
             setSelectedPoint({
               coordinates,
-              properties: feature.properties
+              properties: feature.properties,
             });
           }}
         />
@@ -70,9 +70,9 @@ export function MainMap({
             focusAfterOpen={false}
             closeButton
           >
-            <div className="space-y-1.5 xl:space-y-2 p-1 max-w-3xs">
+            <div className="max-w-3xs space-y-1.5 p-1 xl:space-y-2">
               {/* <div className="w-8 h-8 rounded-full mb-3 bg-everglade-900 -rotate-6"></div> */}
-              <p className="text-base font-bold text-balance leading-tight">
+              <p className="text-base leading-tight font-bold text-balance">
                 {selectedPoint.properties.name}
               </p>
             </div>

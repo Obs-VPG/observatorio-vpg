@@ -1,4 +1,4 @@
-import MainWrapper from "@/components/MainWrapper";
+import MapPage from "@/components/MapPage";
 import config from "@payload-config";
 import { Metadata } from "next";
 import { getPayload } from "payload";
@@ -25,9 +25,10 @@ export default async function Page() {
       intersectionNames: true,
     },
   });
+  if (!casesData.docs) return;
   return (
     <>
-      <MainWrapper cases={casesData.docs} />
+      <MapPage cases={casesData.docs} />
     </>
   );
 }
