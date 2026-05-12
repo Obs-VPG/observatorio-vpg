@@ -12,7 +12,7 @@ import Logos from "./Logos";
 import MapComponent from "./Map";
 import { Button } from "./ui/button";
 import { List, MapIcon } from "lucide-react";
-import Search from "./Search";
+import SearchBar from "./SearchBar";
 
 export interface DataPointInterface {
   id: number;
@@ -32,9 +32,15 @@ export interface DataPointInterface {
 }
 export type MapPageProps = {
   cases: Partial<Case>[];
+  filters: {
+    id: string;
+    name: string;
+    slug: string;
+    additionalType: string;
+  }[];
 };
 
-export default function MapPage({ cases }: MapPageProps) {
+export default function MapPage({ cases, filters }: MapPageProps) {
   const scrollAreaRef = useRef<HTMLDivElement | null>(null);
   const [showMap, setShowMap] = useState(false);
   const [selectedPoint, setSelectedPoint] = useState<Partial<Case> | null>(
@@ -64,21 +70,21 @@ export default function MapPage({ cases }: MapPageProps) {
   };
   return (
     <MapProvider>
-      <Button
-        className="absolute bottom-3 left-3 z-99 md:hidden"
-        onClick={() => setShowMap((prev) => !prev)}
-      >
-        {showMap ? (
-          <>
-            Exibit Lista <List />
-          </>
-        ) : (
-          <>
-            Exibir Mapa <MapIcon />
-          </>
-        )}
-      </Button>
-      <div className="bg-light-green md:flex">
+      <div className="bg-light-green relative md:flex">
+        <Button
+          className="absolute bottom-3 left-3 z-10 md:hidden"
+          onClick={() => setShowMap((prev) => !prev)}
+        >
+          {showMap ? (
+            <>
+              Exibit Lista <List />
+            </>
+          ) : (
+            <>
+              Exibir Mapa <MapIcon />
+            </>
+          )}
+        </Button>
         {/* Map */}
         <div
           className={cn(
@@ -106,7 +112,7 @@ export default function MapPage({ cases }: MapPageProps) {
             className="h-[calc(100svh-4rem)] w-full border-l"
           >
             <div className="grid bg-white">
-              {/* <Search /> */}
+              <SearchBar filters={filters} />
               <CaseList
                 cases={sorteredCases}
                 setSelectedPoint={setSelectedPoint}

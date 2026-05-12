@@ -89,7 +89,7 @@ export default function CaseInfo({
                   key={`${id}-badge-type-${index}-${typeName}`}
                   className="bg-light-green"
                 >
-                  Violência {typeName}
+                  {typeName}
                 </Badge>
               );
             })

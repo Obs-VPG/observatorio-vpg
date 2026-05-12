@@ -12,7 +12,7 @@ export default function Nav({ className }: NavProps) {
   return (
     <div
       className={cn(
-        "bg-light-green border-everglade/5 fixed inset-0 z-90 flex h-16 w-full items-center justify-between gap-3 border-b px-6 md:px-10 xl:px-16",
+        "bg-light-green border-everglade/5 fixed inset-0 z-10 flex h-16 w-full items-center justify-between gap-3 border-b px-6 md:px-10 xl:px-16",
         className,
       )}
     >

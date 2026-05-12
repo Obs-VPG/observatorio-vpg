@@ -1,6 +1,6 @@
 import { exec } from "child_process";
 
-const uri = process.env.DATABASE_URL;
+const uri = process.env.DATABASE_URL_DEV;
 const outDir = "./backup";
 
 exec(`mongodump --uri="${uri}" --out=${outDir}`, (error, stdout, stderr) => {

@@ -1,8 +1,8 @@
 import { spawn } from "child_process";
 import path from "path";
 
-const uri = process.env.DATABASE_URL_DEV;
-const backupPath = path.resolve("./backup");
+const uri = process.env.DATABASE_URL;
+const backupPath = path.resolve("./backup/obsvpg");
 
 console.log("URI:", uri);
 console.log("Backup path:", backupPath);

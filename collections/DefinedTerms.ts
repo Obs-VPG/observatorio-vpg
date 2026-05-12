@@ -1,33 +1,34 @@
-import { CollectionConfig } from 'payload';
+import { CollectionConfig } from "payload";
 
-import { descriptionField, nameField, slugField } from './fields/commonFields';
+import { descriptionField, nameField, slugField } from "./fields/commonFields";
 
 export const DefinedTerms: CollectionConfig = {
-  slug: 'definedTerms',
-  labels: { singular: 'Termo', plural: 'Dicionário de Termos' },
+  slug: "definedTerms",
+  labels: { singular: "Termo", plural: "Dicionário de Termos" },
   admin: {
-    useAsTitle: 'name',
+    useAsTitle: "name",
     description:
-      'Coleção de termos definidos para uso no cadastro de conteúdos no site.',
-    group: 'Configuração',
-    defaultColumns: ['name', 'additionalType', 'description']
+      "Coleção de termos definidos para uso no cadastro de conteúdos no site.",
+    group: "Configuração",
+    defaultColumns: ["name", "slug", "additionalType", "description"],
   },
   fields: [
     nameField,
+    slugField,
     descriptionField,
     {
-      label: 'Categoria do Termo',
-      name: 'additionalType',
-      type: 'select',
+      label: "Categoria do Termo",
+      name: "additionalType",
+      type: "select",
       options: [
-        { label: 'Intersecção', value: 'intersection' },
-        { label: 'Tipo de Violência', value: 'offenseType' },
-        { label: 'Atores', value: 'actors' },
-        { label: 'Identidade de gênero', value: 'genderIdentity' },
-        { label: 'Identidade étnico-racial', value: 'racialIdentity' },
-        { label: 'Faixa etária', value: 'ageGroup' }
+        { label: "Intersecção", value: "intersection" },
+        { label: "Tipo de Violência", value: "offenseType" },
+        { label: "Atores", value: "actors" },
+        { label: "Identidade de gênero", value: "genderIdentity" },
+        { label: "Identidade étnico-racial", value: "racialIdentity" },
+        { label: "Faixa etária", value: "ageGroup" },
       ],
-      required: true
-    }
-  ]
+      required: true,
+    },
+  ],
 };

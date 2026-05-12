@@ -259,6 +259,11 @@ export interface Person {
 export interface DefinedTerm {
   id: string;
   name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   description?: string | null;
   additionalType: 'intersection' | 'offenseType' | 'actors' | 'genderIdentity' | 'racialIdentity' | 'ageGroup';
   updatedAt: string;
@@ -445,6 +450,8 @@ export interface CasesSelect<T extends boolean = true> {
  */
 export interface DefinedTermsSelect<T extends boolean = true> {
   name?: T;
+  generateSlug?: T;
+  slug?: T;
   description?: T;
   additionalType?: T;
   updatedAt?: T;
