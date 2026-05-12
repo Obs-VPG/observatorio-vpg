@@ -124,7 +124,7 @@ export default function MapComponent({
         [clusterLayer.id, unclusteredPointLayer.id] as string[]
       }
       onClick={onClick}
-      // reuseMaps
+      reuseMaps
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       dragRotate={false}

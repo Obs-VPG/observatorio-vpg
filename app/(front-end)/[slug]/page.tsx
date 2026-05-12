@@ -29,7 +29,6 @@ export default async function PagePage({
   params,
   searchParams: searchParamsPromise,
 }: PagePageProps) {
-  const searchParams = await searchParamsPromise;
   const { slug } = await params;
   const doc = (await getDocBySlug("pages", slug)) as Page | null;
   if (!doc) return "Not found.";

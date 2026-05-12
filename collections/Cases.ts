@@ -17,6 +17,13 @@ export const Cases: CollectionConfig = {
     //   'Coleção de termos definidos para uso no cadastro de conteúdos no site.',
     // group: 'Configuração',
     // defaultColumns: ['name', 'additionalType', 'description']
+    components: {
+      edit: {
+        beforeDocumentControls: [
+          "@/components/payload/ui/BeforeControls#VisitContent",
+        ],
+      },
+    },
   },
   fields: [
     {

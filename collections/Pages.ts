@@ -3,6 +3,8 @@ import { CollectionConfig } from "payload";
 import { nameField, slugField } from "./fields/commonFields";
 import { richTextBlock } from "./blocks/richTextBlock";
 import { spacerBlock } from "./blocks/spacerBlock";
+import { defaultCTABlock } from "./blocks/defaultCTA";
+import { carouselCTABlock } from "./blocks/carouselCTA";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -26,7 +28,7 @@ export const Pages: CollectionConfig = {
       label: "Conteúdo",
       labels: { singular: "Bloco", plural: "Bloco" },
       type: "blocks",
-      blocks: [richTextBlock, spacerBlock],
+      blocks: [richTextBlock, spacerBlock, defaultCTABlock, carouselCTABlock],
     },
   ],
 };

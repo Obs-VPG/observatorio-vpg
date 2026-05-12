@@ -12,6 +12,7 @@ import { DefinedTerms } from "./collections/DefinedTerms";
 import { Cases } from "./collections/Cases";
 import { Persons } from "./collections/Persons";
 import { Pages } from "./collections/Pages";
+import { Config } from "./collections/Config";
 
 export default buildConfig({
   maxDepth: 3,
@@ -52,7 +53,7 @@ export default buildConfig({
     supportedLanguages: { en, pt },
   },
   editor: lexicalEditor(),
-  globals: [],
+  globals: [Config],
   collections: [Pages, Cases, DefinedTerms, Users, Persons],
   secret: process.env.PAYLOAD_SECRET || "",
   db: mongooseAdapter({
