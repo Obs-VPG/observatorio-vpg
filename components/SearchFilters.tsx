@@ -25,9 +25,8 @@ import {
 } from "./ui/field";
 
 import { Checkbox } from "./ui/checkbox";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { usePathname } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { YearPicker } from "./ui/year-picker";
 
 export type SearchFiltersProps = {
   filters: {
@@ -39,57 +38,103 @@ export type SearchFiltersProps = {
 };
 
 export default function SearchFilters({ filters }: SearchFiltersProps) {
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const router = useRouter();
-  const path = usePathname();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const q = searchParams.get("q");
-  const filtersQ = searchParams.get("filters");
 
-  useEffect(() => {
-    console.log(filtersQ);
-    if (filtersQ) setSelectedFilters(filtersQ?.split(","));
-  }, [filtersQ]);
+  const [selectedOffenseTypes, setSelectedOffenseTypes] = useState<string[]>(
+    [],
+  );
+
+  const [selectedIntersections, setSelectedIntersections] = useState<string[]>(
+    [],
+  );
+
+  const [dateStart, setDateStart] = useState<number | undefined>();
+  const [dateEnd, setDateEnd] = useState<number | undefined>();
+
+  const q = searchParams.get("q");
 
   const offenseTypes = useMemo(
-    () => filters.filter((f) => f.additionalType === "offenseType"),
+    () => filters.filter((filter) => filter.additionalType === "offenseType"),
     [filters],
   );
 
   const intersections = useMemo(
-    () => filters.filter((f) => f.additionalType === "intersection"),
+    () => filters.filter((filter) => filter.additionalType === "intersection"),
     [filters],
   );
 
-  const toggleFilter = (filterId: string, checked: boolean) => {
-    setSelectedFilters((prev) => {
+  useEffect(() => {
+    const offenseTypeParams = searchParams.get("offenseType")?.split(",") ?? [];
+
+    const intersectionParams =
+      searchParams.get("intersection")?.split(",") ?? [];
+
+    const startDateParam = searchParams.get("startDate");
+    const endDateParam = searchParams.get("endDate");
+
+    setSelectedOffenseTypes(offenseTypeParams.filter(Boolean));
+
+    setSelectedIntersections(intersectionParams.filter(Boolean));
+
+    setDateStart(startDateParam ? Number(startDateParam) : undefined);
+
+    setDateEnd(endDateParam ? Number(endDateParam) : undefined);
+  }, [searchParams]);
+
+  const toggleValue = (
+    value: string,
+    checked: boolean,
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+  ) => {
+    setter((prev) => {
       if (checked) {
-        return [...prev, filterId];
+        return [...prev, value];
       }
 
-      return prev.filter((id) => id !== filterId);
+      return prev.filter((item) => item !== value);
     });
   };
 
   const onApply = () => {
-    console.log(selectedFilters);
+    const params = new URLSearchParams();
 
-    router.push(
-      `${path}${q ? `?q=${q}` : ""}${selectedFilters.length > 0 ? `${q ? "&" : "?"}filters=${selectedFilters.join(",")}` : ``}`,
-    );
+    if (q) {
+      params.set("q", q);
+    }
 
-    // do something with selectedFilters
-    // example:
-    // router.push(...)
-    // setSearchParams(...)
-    // call parent callback(...)
+    if (selectedOffenseTypes.length > 0) {
+      params.set("offenseType", selectedOffenseTypes.join(","));
+    }
+
+    if (selectedIntersections.length > 0) {
+      params.set("intersection", selectedIntersections.join(","));
+    }
+
+    if (dateStart) {
+      params.set("startDate", String(dateStart));
+    }
+
+    if (dateEnd) {
+      params.set("endDate", String(dateEnd));
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="px-3" variant="outline">
+        <Button className="relative px-3" variant="outline">
           Filtros
+          {q ||
+          dateEnd ||
+          dateStart ||
+          selectedIntersections.length > 0 ||
+          selectedOffenseTypes.length > 0 ? (
+            <div className="bg-everglade-500 absolute -top-1 -left-1 z-5 size-2.5 rounded-full"></div>
+          ) : null}
           <SlidersHorizontal />
         </Button>
       </DialogTrigger>
@@ -104,29 +149,33 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
         </DialogHeader>
 
         <div className="grid gap-4">
+          {/* Tipo de violência */}
           <FieldSet>
             <FieldLegend variant="label">Tipo de violência</FieldLegend>
 
             <FieldGroup className="grid grid-cols-2 gap-3 gap-y-2">
               {offenseTypes.map((filter) => {
-                const checked = selectedFilters.includes(filter.slug);
+                const checked = selectedOffenseTypes.includes(filter.slug);
 
                 return (
                   <Field
-                    key={`field-filter-${filter.slug}`}
+                    key={`offense-${filter.slug}`}
                     orientation="horizontal"
                   >
                     <Checkbox
-                      id={`field-filter-${filter.slug}`}
-                      name={`field-filter-${filter.slug}`}
+                      id={`offense-${filter.slug}`}
                       checked={checked}
                       onCheckedChange={(value) =>
-                        toggleFilter(filter.slug, value === true)
+                        toggleValue(
+                          filter.slug,
+                          value === true,
+                          setSelectedOffenseTypes,
+                        )
                       }
                     />
 
                     <FieldLabel
-                      htmlFor={`field-filter-${filter.slug}`}
+                      htmlFor={`offense-${filter.slug}`}
                       className="cursor-pointer font-normal"
                     >
                       {filter.name}
@@ -137,29 +186,33 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
             </FieldGroup>
           </FieldSet>
 
+          {/* Intersecções */}
           <FieldSet>
             <FieldLegend variant="label">Intersecções</FieldLegend>
 
             <FieldGroup className="grid grid-cols-2 gap-3 gap-y-2">
               {intersections.map((filter) => {
-                const checked = selectedFilters.includes(filter.slug);
+                const checked = selectedIntersections.includes(filter.slug);
 
                 return (
                   <Field
-                    key={`field-filter-${filter.slug}`}
+                    key={`intersection-${filter.slug}`}
                     orientation="horizontal"
                   >
                     <Checkbox
-                      id={`field-filter-${filter.slug}`}
-                      name={`field-filter-${filter.slug}`}
+                      id={`intersection-${filter.slug}`}
                       checked={checked}
                       onCheckedChange={(value) =>
-                        toggleFilter(filter.slug, value === true)
+                        toggleValue(
+                          filter.slug,
+                          value === true,
+                          setSelectedIntersections,
+                        )
                       }
                     />
 
                     <FieldLabel
-                      htmlFor={`field-filter-${filter.slug}`}
+                      htmlFor={`intersection-${filter.slug}`}
                       className="cursor-pointer font-normal"
                     >
                       {filter.name}
@@ -169,6 +222,51 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
               })}
             </FieldGroup>
           </FieldSet>
+
+          {/* Datas */}
+          <FieldSet>
+            <FieldLegend variant="label" className="mb-1">
+              Recorte Temporal
+            </FieldLegend>
+
+            <FieldGroup className="grid gap-3 md:grid-cols-2">
+              <Field className="gap-y-1">
+                <FieldLabel
+                  className="text-muted-foreground text-xs font-normal"
+                  htmlFor="dateStart"
+                >
+                  A partir de
+                </FieldLabel>
+
+                <YearPicker
+                  placeholder="Selecione o ano"
+                  value={dateStart}
+                  onChange={setDateStart}
+                />
+              </Field>
+
+              <Field className="gap-y-1">
+                <FieldLabel
+                  className="text-muted-foreground text-xs font-normal"
+                  htmlFor="dateEnd"
+                >
+                  Até
+                </FieldLabel>
+
+                <YearPicker
+                  placeholder="Selecione o ano"
+                  value={dateEnd}
+                  onChange={setDateEnd}
+                />
+              </Field>
+            </FieldGroup>
+          </FieldSet>
+
+          {dateEnd && dateStart && dateEnd < dateStart ? (
+            <div className="-mt-2 text-red-600/60">
+              A data final deve ser maior que a data de início!
+            </div>
+          ) : null}
         </div>
 
         <DialogFooter className="sm:justify-end">
@@ -179,7 +277,11 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
           </DialogClose>
 
           <DialogClose asChild>
-            <Button type="button" onClick={onApply}>
+            <Button
+              type="button"
+              onClick={onApply}
+              disabled={Boolean(dateEnd && dateStart && dateEnd < dateStart)}
+            >
               Aplicar
             </Button>
           </DialogClose>

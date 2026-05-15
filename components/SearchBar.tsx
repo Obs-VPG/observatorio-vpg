@@ -28,7 +28,10 @@ export default function SearchBar({ filters: filtersData }: SearchBarProps) {
   const [prevValue, setPrevValue] = useState("XXX");
 
   const q = searchParams.get("q");
-  const filters = searchParams.get("filters");
+  const startDate = searchParams.get("startDate");
+  const endDate = searchParams.get("endDate");
+  const offenseType = searchParams.get("offenseType");
+  const intersection = searchParams.get("interserction");
 
   const debouncedValue = useDebounce(value);
 
@@ -39,10 +42,31 @@ export default function SearchBar({ filters: filtersData }: SearchBarProps) {
   }, [q]);
 
   useEffect(() => {
-    if (prevValue !== "XXX")
-      router.push(
-        `${path}${debouncedValue !== "" ? `?q=${debouncedValue}` : ""}${filters ? (debouncedValue ? "&" : "?") : ""}${filters ? `filters=${filters}` : ""}`,
-      );
+    if (prevValue !== "XXX") {
+      const params = new URLSearchParams();
+
+      if (debouncedValue) {
+        params.set("q", debouncedValue);
+      }
+
+      if (offenseType) {
+        params.set("offenseType", offenseType);
+      }
+
+      if (intersection) {
+        params.set("intersection", intersection);
+      }
+
+      if (startDate) {
+        params.set("startDate", String(startDate));
+      }
+
+      if (endDate) {
+        params.set("endDate", String(endDate));
+      }
+
+      router.push(`${path}?${params.toString()}`);
+    }
   }, [debouncedValue, router]);
 
   useEffect(() => {

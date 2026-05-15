@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
@@ -163,9 +163,10 @@
     box-shadow: none !important;
     padding: 0 !important;
     border-radius: 0 !important;
+    width: fit-content;
   }
   .maplibregl-popup-close-button {
-    @apply border  absolute right-0! top-0! size-5! rounded-xs!  bg-yellow-orange!  hover:bg-yellow-orange-400! font-bold flex items-center justify-center text-lg pb-1;
+    @apply bg-yellow-orange! hover:bg-yellow-orange-400! absolute flex size-5! items-center justify-center rounded-xs! border pb-1 text-lg font-bold;
   }
   /* .maplibregl-popup-tip {
     @apply hidden!;

@@ -1,4 +1,5 @@
 import MapPage from "@/components/MapPage";
+import { getYearBoundaryISO } from "@/lib/utils";
 import config from "@payload-config";
 import { Metadata } from "next";
 import { getPayload, Where } from "payload";
@@ -12,17 +13,31 @@ export const metadata: Metadata = {
 export type MapPageProps = {
   searchParams: Promise<{
     q: string;
-    filters: string;
+    intersection: string;
+    offenseType: string;
+    startDate: string;
+    endDate: string;
   }>;
 };
 
 export default async function Page({
   searchParams: searchParamsPromise,
 }: MapPageProps) {
-  const { q: query, filters } = await searchParamsPromise;
+  const {
+    q: query,
+    intersection,
+    offenseType,
+    startDate,
+    endDate,
+  } = await searchParamsPromise;
 
-  const queryOr: Where = {
-    or: [
+  let queryOr: Where = {
+    or: [],
+  };
+
+  if (query) {
+    queryOr.or = [
+      ...(queryOr.or as Where[]),
       {
         name: {
           like: query,
@@ -33,9 +48,8 @@ export default async function Page({
           like: query,
         },
       },
-    ],
-  };
-
+    ];
+  }
   const filtersData = await payload.find({
     collection: "definedTerms",
     pagination: false,
@@ -48,42 +62,90 @@ export default async function Page({
     },
   });
 
-  const offenseTypeSlugs = filtersData.docs
-    ?.filter((d) => d.additionalType === "offenseType")
-    .map((d) => d.slug);
-  const intersectionSlugs = filtersData.docs
-    ?.filter((d) => d.additionalType === "intersection")
-    .map((d) => d.slug);
+  const intersections = intersection ? intersection.split(",") : [];
 
-  const intersections = filters
-    ? filters.split(",").filter((f) => intersectionSlugs.includes(f))
-    : [];
+  const offenseTypes = offenseType ? offenseType.split(",") : [];
 
-  const offenseTypes = filters
-    ? filters.split(",").filter((f) => offenseTypeSlugs.includes(f))
-    : [];
+  const filtersIn: Where =
+    offenseTypes.length > 0 || intersections.length > 0
+      ? {
+          and: [
+            ...(intersections.length > 0
+              ? intersections.map((slug) => ({
+                  "intersections.slug": {
+                    equals: slug,
+                  },
+                }))
+              : []),
 
-  const filtersIn: Where = filters
-    ? {
-        and: [
-          ...(intersections.length > 0
-            ? intersections.map((slug) => ({
-                "intersections.slug": {
-                  equals: slug,
-                },
-              }))
-            : []),
+            ...(offenseTypes.length > 0
+              ? offenseTypes.map((slug) => ({
+                  "offenseType.slug": {
+                    equals: slug,
+                  },
+                }))
+              : []),
+          ],
+        }
+      : {};
 
-          ...(offenseTypes.length > 0
-            ? offenseTypes.map((slug) => ({
-                "offenseType.slug": {
-                  equals: slug,
-                },
-              }))
-            : []),
-        ],
-      }
-    : {};
+  const queryStart = startDate
+    ? getYearBoundaryISO(Number(startDate), "min")
+    : null;
+
+  const queryEnd = endDate ? getYearBoundaryISO(Number(endDate), "max") : null;
+
+  let dateFilter: Where = {};
+
+  if (queryStart && !queryEnd) {
+    queryOr.or = [
+      ...(queryOr.or as Where[]),
+      {
+        startDate: { greater_than_equal: queryStart },
+      },
+      {
+        endDate: { exists: true, greater_than_equal: queryStart },
+        startDate: { less_than: queryStart },
+      },
+      {
+        startDate: { less_than: queryStart },
+        isActive: { equals: true },
+      },
+    ];
+  }
+
+  if (queryEnd && !queryStart) {
+    queryOr.or = [
+      ...(queryOr.or as Where[]),
+      {
+        startDate: { less_than_equal: queryEnd },
+      },
+    ];
+  }
+
+  if (queryEnd && queryStart) {
+    queryOr.or = [
+      ...(queryOr.or as Where[]),
+      {
+        startDate: {
+          greater_than_equal: queryStart,
+          less_than_equal: queryEnd,
+        },
+      },
+      {
+        startDate: {
+          less_than: queryStart,
+        },
+        endDate: { exists: true, greater_than_equal: queryStart },
+      },
+      {
+        startDate: {
+          less_than: queryStart,
+        },
+        isActive: { equals: true },
+      },
+    ];
+  }
 
   const casesData = await payload.find({
     collection: "cases",
@@ -100,11 +162,16 @@ export default async function Page({
       typeNames: true,
       intersectionNames: true,
     },
-    ...(query || filters
+    ...(query ||
+    offenseTypes.length > 0 ||
+    intersections.length > 0 ||
+    queryStart ||
+    queryEnd
       ? {
           where: {
-            ...(query ? queryOr : {}),
+            ...(query || queryStart || queryEnd ? queryOr : {}),
             ...filtersIn,
+            ...dateFilter,
           },
         }
       : {}),

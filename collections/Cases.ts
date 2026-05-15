@@ -118,7 +118,9 @@ export const Cases: CollectionConfig = {
           name: "startDate",
           label: "Data de Início",
           type: "date",
-          admin: { date: { pickerAppearance: "default" } },
+          admin: {
+            date: { pickerAppearance: "default", displayFormat: "dd/MM/yyyy" },
+          },
           required: true,
         },
         {
@@ -126,7 +128,7 @@ export const Cases: CollectionConfig = {
           label: "Data de Término",
           type: "date",
           admin: {
-            date: { pickerAppearance: "default" },
+            date: { pickerAppearance: "default", displayFormat: "dd/MM/yyyy" },
             condition: (data, siblingData, { blockData, path, user }) => {
               return !data.isActive;
             },

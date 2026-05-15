@@ -9,10 +9,10 @@ import {
 import VictimProfile from "@/components/VictimProfile";
 import { cn } from "@/lib/utils";
 import { Person } from "@/payload-types";
-import config from "@payload-config";
-import { ExternalLink } from "lucide-react";
+import { ChevronRight, ExternalLink } from "lucide-react";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
+import config from "@payload-config";
 import { getPayload } from "payload";
 const payload = await getPayload({ config });
 
@@ -45,21 +45,31 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
   const endDate = doc.endDate ? new Date(doc.endDate) : false;
   let dateOptions =
     doc.dateAccuracy === "day"
-      ? { year: "numeric", month: "numeric", day: "numeric" }
+      ? { year: "numeric", month: "long", day: "numeric" }
       : doc.dateAccuracy === "month"
-        ? { year: "numeric", month: "numeric" }
+        ? { year: "numeric", month: "long" }
         : { year: "numeric" };
   return (
-    <div className="mx-auto w-full px-6 py-8 md:px-10 lg:py-12 xl:px-16 xl:py-20">
+    <div className="mx-auto w-full px-6 pt-6 pb-8 md:px-10 lg:pt-8 lg:pb-12 xl:px-16 xl:pb-20">
+      <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 pb-4 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:pb-8">
+        <Link href="/" className="text-everglade hover:text-everglade-600">
+          Observatório de Violência Política de Gênero
+        </Link>{" "}
+        <ChevronRight className="size-4" />{" "}
+        <Link href="/mapa" className="text-everglade hover:text-everglade-600">
+          Mapa de conflitos
+        </Link>{" "}
+        <ChevronRight className="size-4" /> Caso
+      </div>
       {startDate ? (
         <p
           className={cn(
-            "text-everglade mb-2 text-center text-sm font-medium tracking-wider uppercase md:mb-3 lg:text-base xl:mb-5",
+            "mb-2 text-center text-base md:mb-2 md:text-lg lg:text-xl xl:mb-4",
           )}
         >
           {startDate ? (
             <span>
-              {startDate.toLocaleDateString("pt-BR", dateOptions as any)}
+              {startDate.toLocaleDateString("pt-BR", dateOptions as any)}{" "}
             </span>
           ) : null}
           {endDate && !doc.isActive ? (
@@ -73,14 +83,16 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
       ) : null}
       <h1
         className={cn(
-          "mb-8 text-center text-3xl leading-[1.15] font-bold text-balance md:text-4xl lg:mb-10 lg:text-5xl xl:mb-16 xl:text-[5svw]",
+          "text-everglade mb-8 text-center text-3xl leading-none font-black text-balance md:text-4xl lg:mb-8 lg:text-5xl xl:mb-12 xl:text-[5svw]",
         )}
       >
         {doc.name}
       </h1>
+      <p className="text-muted-foreground mb-2 text-center text-xs tracking-wider uppercase lg:mb-4">
+        Resumo
+      </p>
       <CollapsibleBodyContent text={doc.description} />
-
-      <div className="my-12 grid items-center gap-6 md:grid-cols-2 lg:my-24 xl:my-32">
+      <div className="my-12 grid items-center gap-6 md:grid-cols-2 lg:my-20 xl:my-24">
         <div className="bg-light-green relative h-full min-h-64 w-full overflow-hidden rounded border xl:min-h-112">
           <CaseLocationMap doc={doc} />
         </div>
@@ -186,7 +198,9 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
             </p>
             <div className="flex flex-wrap items-center gap-2">
               <Badge className="px-3 py-0.5 wrap-break-word whitespace-normal md:h-auto md:text-sm">
-                {doc.sphere === "Outro" ? doc.sphereOther : doc.sphere}
+                {doc.sphere === "Outro" && doc.sphereOther
+                  ? doc.sphereOther
+                  : doc.sphere}
               </Badge>
             </div>
           </div>
