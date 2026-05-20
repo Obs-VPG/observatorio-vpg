@@ -39,7 +39,12 @@ export default async function Nav({}: NavProps) {
       <div className="hidden items-center md:flex">
         {config.mainMenu.map((menuItem) => {
           return (
-            <Button key={`menu-nav-${menuItem.id}`} variant={"ghost"} asChild>
+            <Button
+              key={`menu-nav-${menuItem.id}`}
+              variant={"ghost"}
+              className="px-3 lg:px-5"
+              asChild
+            >
               <DynamicContentLink
                 slug={(menuItem.link!.internalContent?.value as any)?.slug}
                 collection={menuItem.link!.internalContent?.relationTo || ""}

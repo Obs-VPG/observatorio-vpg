@@ -106,16 +106,6 @@ export default function MapPage({ cases, filters }: MapPageProps) {
                   setSelectedPoint={setSelectedPoint}
                 />
               </div>
-              <div className="grid">
-                <p className="text-muted-foreground relative z-3 mt-8 mb-3 px-6 text-xs tracking-widest uppercase">
-                  Realização
-                </p>
-                <div className="border-everglade/5 relative overflow-hidden bg-[#fff] p-4 px-1">
-                  <div className="pointer-events-none absolute top-0 left-1 z-2 h-full w-36 bg-linear-to-r from-[#fff] to-transparent"></div>
-                  <div className="pointer-events-none absolute top-0 right-1 z-2 h-full w-36 bg-linear-to-l from-[#fff] to-transparent"></div>
-                  <Logos />
-                </div>
-              </div>
             </div>
           </ScrollArea>
         </div>
