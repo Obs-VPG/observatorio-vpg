@@ -1,7 +1,7 @@
 "use client";
 
 import { DefinedTerm, Person } from "@/payload-types";
-import GlossarioHoverInfo from "./GlossarioHoverInfo";
+import GlossarioHoverInfo from "./GlossarioInfoPopover";
 
 export type VictimProfileProps = { victim: Person };
 

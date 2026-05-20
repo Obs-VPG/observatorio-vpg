@@ -1,20 +1,20 @@
 import CaseLocationMap from "@/components/CaseLocationMap";
 import CollapsibleBodyContent from "@/components/CollapsibleBodyContent";
+import GlossarioInfoPopover from "@/components/GlossarioInfoPopover";
 import { Badge } from "@/components/ui/badge";
 import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import VictimProfile from "@/components/VictimProfile";
 import { cn } from "@/lib/utils";
 import { Person } from "@/payload-types";
+import config from "@payload-config";
 import { ChevronRight, ExternalLink } from "lucide-react";
 import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
-import config from "@payload-config";
 import { getPayload } from "payload";
-import GlossarioHoverInfo from "@/components/GlossarioHoverInfo";
 const payload = await getPayload({ config });
 
 export type ConflitoPageProps = {
@@ -109,21 +109,21 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
               {doc?.victim
                 ? doc?.victim?.map((victim, index) => {
                     return (
-                      <HoverCard
+                      <Popover
                         key={`${doc.id}-badge-victim-${index}-${(victim as Person).id}`}
                       >
-                        <HoverCardTrigger>
+                        <PopoverTrigger>
                           <Badge
                             className="cursor-help py-0.5 md:h-auto md:px-3 md:text-sm"
                             variant={"secondary"}
                           >
                             {(victim as Person).name}
                           </Badge>
-                        </HoverCardTrigger>
-                        <HoverCardContent>
+                        </PopoverTrigger>
+                        <PopoverContent>
                           <VictimProfile victim={victim as Person} />
-                        </HoverCardContent>
-                      </HoverCard>
+                        </PopoverContent>
+                      </Popover>
                     );
                   })
                 : null}
@@ -133,7 +133,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
           {doc?.intersectionNames && doc.intersectionNames.length > 0 ? (
             <div>
               <p className="text-muted-foreground mb-1.5 flex gap-2 text-xs tracking-wider uppercase md:mb-2">
-                Intersecções do conflito <GlossarioHoverInfo />
+                Intersecções do conflito <GlossarioInfoPopover />
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {doc?.intersectionNames?.map((intersection, index) => {
@@ -155,7 +155,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
           {doc?.typeNames && doc.typeNames.length > 0 ? (
             <div>
               <p className="text-muted-foreground mb-1.5 flex gap-2 text-xs tracking-wider uppercase md:mb-2">
-                Tipos de violência <GlossarioHoverInfo />
+                Tipos de violência <GlossarioInfoPopover />
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {doc?.typeNames?.map((typeName, index) => {
@@ -176,7 +176,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
           {doc?.actorNames && doc.actorNames.length > 0 ? (
             <div>
               <p className="text-muted-foreground mb-1.5 flex gap-2 text-xs tracking-wider uppercase md:mb-2">
-                Atores envolvidos <GlossarioHoverInfo />
+                Atores envolvidos <GlossarioInfoPopover />
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {doc?.actorNames?.map((typeName, index) => {

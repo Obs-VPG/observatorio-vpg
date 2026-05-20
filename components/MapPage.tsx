@@ -11,7 +11,7 @@ import CaseList from "./CaseList";
 import Logos from "./Logos";
 import MapComponent from "./Map";
 import { Button } from "./ui/button";
-import { List, MapIcon } from "lucide-react";
+import { EarthIcon, List, MapIcon } from "lucide-react";
 import SearchBar from "./SearchBar";
 
 export type MapPageProps = {
@@ -56,16 +56,19 @@ export default function MapPage({ cases, filters }: MapPageProps) {
     <MapProvider>
       <div className="bg-light-green relative md:flex">
         <Button
-          className="absolute bottom-3 left-3 z-10 md:hidden"
+          className="absolute right-4 bottom-4 z-10 h-10 rounded-full border border-black/10 shadow-lg md:hidden"
+          variant={"secondary"}
           onClick={() => setShowMap((prev) => !prev)}
         >
           {showMap ? (
             <>
-              Exibit Lista <List />
+              <List className="size-4" />
+              Lista
             </>
           ) : (
             <>
-              Exibir Mapa <MapIcon />
+              <EarthIcon className="size-4" />
+              Mapa
             </>
           )}
         </Button>
