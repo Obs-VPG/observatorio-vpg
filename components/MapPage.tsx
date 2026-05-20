@@ -14,22 +14,6 @@ import { Button } from "./ui/button";
 import { List, MapIcon } from "lucide-react";
 import SearchBar from "./SearchBar";
 
-export interface DataPointInterface {
-  id: number;
-  category: number;
-  country: string;
-  project_status: number;
-  status: number;
-  reaction: number;
-  locale: string;
-  headline: string;
-  name: string;
-  slug: string;
-  general: any;
-  commodity: string[];
-  company: string[];
-  type: string[];
-}
 export type MapPageProps = {
   cases: Partial<Case>[];
   filters: {
@@ -109,21 +93,25 @@ export default function MapPage({ cases, filters }: MapPageProps) {
         >
           <ScrollArea
             ref={scrollAreaRef}
-            className="h-[calc(100svh-4rem)] w-full border-l"
+            className="h-[calc(100svh-4rem)] w-full border-l bg-white"
           >
-            <div className="grid bg-white">
-              <SearchBar filters={filters} />
-              <CaseList
-                cases={sorteredCases}
-                setSelectedPoint={setSelectedPoint}
-              />
-              <p className="text-muted-foreground relative z-3 mt-8 mb-3 px-6 text-xs tracking-widest uppercase">
-                Realização
-              </p>
-              <div className="border-everglade/5 relative overflow-hidden bg-[#fff] p-4 px-1">
-                <div className="pointer-events-none absolute top-0 left-1 z-2 h-full w-36 bg-linear-to-r from-[#fff] to-transparent"></div>
-                <div className="pointer-events-none absolute top-0 right-1 z-2 h-full w-36 bg-linear-to-l from-[#fff] to-transparent"></div>
-                <Logos />
+            <div className="flex min-h-[calc(100svh-4rem)] flex-col justify-between">
+              <div className="grid">
+                <SearchBar filters={filters} />
+                <CaseList
+                  cases={sorteredCases}
+                  setSelectedPoint={setSelectedPoint}
+                />
+              </div>
+              <div className="grid">
+                <p className="text-muted-foreground relative z-3 mt-8 mb-3 px-6 text-xs tracking-widest uppercase">
+                  Realização
+                </p>
+                <div className="border-everglade/5 relative overflow-hidden bg-[#fff] p-4 px-1">
+                  <div className="pointer-events-none absolute top-0 left-1 z-2 h-full w-36 bg-linear-to-r from-[#fff] to-transparent"></div>
+                  <div className="pointer-events-none absolute top-0 right-1 z-2 h-full w-36 bg-linear-to-l from-[#fff] to-transparent"></div>
+                  <Logos />
+                </div>
               </div>
             </div>
           </ScrollArea>

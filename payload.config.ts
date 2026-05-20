@@ -13,6 +13,7 @@ import { Cases } from "./collections/Cases";
 import { Persons } from "./collections/Persons";
 import { Pages } from "./collections/Pages";
 import { Config } from "./collections/Config";
+import { Posts } from "./collections/Posts";
 
 export default buildConfig({
   maxDepth: 3,
@@ -54,7 +55,7 @@ export default buildConfig({
   },
   editor: lexicalEditor(),
   globals: [Config],
-  collections: [Pages, Cases, DefinedTerms, Users, Persons],
+  collections: [Pages, Posts, Cases, DefinedTerms, Users, Persons],
   secret: process.env.PAYLOAD_SECRET || "",
   db: mongooseAdapter({
     // Mongoose-specific arguments go here.

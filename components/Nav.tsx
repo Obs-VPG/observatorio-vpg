@@ -1,24 +1,48 @@
-"use client";
-
-import { MenuIcon } from "lucide-react";
-import Logo from "./Logo";
-import { DetailedHTMLProps, HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Logo from "./Logo";
+import { getPayload } from "payload";
+import config from "@payload-config";
+import { Button } from "./ui/button";
+import { DynamicContentLink } from "./DynamicContentLink";
+
+const payload = await getPayload({ config });
 
 export type NavProps = {} & React.ComponentProps<"div">;
 
-export default function Nav({ className }: NavProps) {
+export default async function Nav({}: NavProps) {
+  const config = await payload.findGlobal({
+    slug: "config",
+    select: { mainMenu: true },
+  });
   return (
     <div
       className={cn(
-        "bg-light-green border-everglade/5 fixed inset-0 z-10 flex h-16 w-full items-center justify-between gap-3 border-b px-6 md:px-10 xl:px-16",
-        className,
+        "bg-light-green border-everglade/5 fixed inset-0 z-10 flex h-16 w-full items-center justify-between gap-3 border-b px-6 pl-2 md:px-10 md:pl-6 xl:px-16 xl:pl-12",
       )}
     >
-      <Link href="/" title="Observatório de Violência Política de Gênero">
+      <Link
+        href="/"
+        title="Observatório de Violência Política de Gênero"
+        className="rounded-b-2xl p-3 px-4"
+      >
         <Logo className="h-10 w-fit" />
       </Link>
+      <div className="flex items-center">
+        {config.mainMenu.map((menuItem) => {
+          return (
+            <Button variant={"ghost"} asChild>
+              <DynamicContentLink
+                slug={(menuItem.link!.internalContent?.value as any)?.slug}
+                collection={menuItem.link!.internalContent?.relationTo || ""}
+                href={menuItem.link!.url || undefined}
+              >
+                {menuItem.label}
+              </DynamicContentLink>
+            </Button>
+          );
+        })}
+      </div>
     </div>
   );
 }

@@ -2,6 +2,20 @@ import { CollectionConfig } from "payload";
 
 import { descriptionField, nameField, slugField } from "./fields/commonFields";
 
+export const definedTermsOptions = [
+  { label: "Intersecção", value: "intersection", description: "" },
+  { label: "Tipo de Violência", value: "offenseType", description: "" },
+  { label: "Atores envolvidos", value: "actors", description: "" },
+  { label: "Identidade de gênero", value: "genderIdentity", description: "" },
+  {
+    label: "Identidade étnico-racial",
+    value: "racialIdentity",
+    description: "",
+  },
+  { label: "Faixa etária", value: "ageGroup", description: "" },
+  { label: "Orientação Sexual", value: "sexualOrientation", description: "" },
+];
+
 export const DefinedTerms: CollectionConfig = {
   slug: "definedTerms",
   labels: { singular: "Termo", plural: "Dicionário de Termos" },
@@ -20,14 +34,7 @@ export const DefinedTerms: CollectionConfig = {
       label: "Categoria do Termo",
       name: "additionalType",
       type: "select",
-      options: [
-        { label: "Intersecção", value: "intersection" },
-        { label: "Tipo de Violência", value: "offenseType" },
-        { label: "Atores", value: "actors" },
-        { label: "Identidade de gênero", value: "genderIdentity" },
-        { label: "Identidade étnico-racial", value: "racialIdentity" },
-        { label: "Faixa etária", value: "ageGroup" },
-      ],
+      options: definedTermsOptions,
       required: true,
     },
   ],

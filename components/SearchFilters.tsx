@@ -27,6 +27,7 @@ import {
 import { Checkbox } from "./ui/checkbox";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { YearPicker } from "./ui/year-picker";
+import { DrawerDialog } from "./DrawerDialog";
 
 export type SearchFiltersProps = {
   filters: {
@@ -124,8 +125,8 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <DrawerDialog
+      trigger={
         <Button className="relative px-3" variant="outline">
           Filtros
           {q ||
@@ -137,156 +138,142 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
           ) : null}
           <SlidersHorizontal />
         </Button>
-      </DialogTrigger>
+      }
+      title="Filtros"
+      description="Utilize os filtros abaixo para refinar a sua busca."
+      cancelButton={
+        <Button type="button" variant="secondary">
+          Cancelar
+        </Button>
+      }
+      closeButton={
+        <Button
+          type="button"
+          onClick={onApply}
+          disabled={Boolean(dateEnd && dateStart && dateEnd < dateStart)}
+        >
+          Aplicar
+        </Button>
+      }
+    >
+      {" "}
+      <div className="grid gap-4">
+        {/* Tipo de violência */}
+        <FieldSet>
+          <FieldLegend variant="label">Tipo de violência</FieldLegend>
 
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader hidden>
-          <DialogTitle>Filtros</DialogTitle>
+          <FieldGroup className="grid grid-cols-2 gap-3 gap-y-2">
+            {offenseTypes.map((filter) => {
+              const checked = selectedOffenseTypes.includes(filter.slug);
 
-          <DialogDescription>
-            Utilize os filtros abaixo para refinar a sua busca.
-          </DialogDescription>
-        </DialogHeader>
+              return (
+                <Field key={`offense-${filter.slug}`} orientation="horizontal">
+                  <Checkbox
+                    id={`offense-${filter.slug}`}
+                    checked={checked}
+                    onCheckedChange={(value) =>
+                      toggleValue(
+                        filter.slug,
+                        value === true,
+                        setSelectedOffenseTypes,
+                      )
+                    }
+                  />
 
-        <div className="grid gap-4">
-          {/* Tipo de violência */}
-          <FieldSet>
-            <FieldLegend variant="label">Tipo de violência</FieldLegend>
-
-            <FieldGroup className="grid grid-cols-2 gap-3 gap-y-2">
-              {offenseTypes.map((filter) => {
-                const checked = selectedOffenseTypes.includes(filter.slug);
-
-                return (
-                  <Field
-                    key={`offense-${filter.slug}`}
-                    orientation="horizontal"
+                  <FieldLabel
+                    htmlFor={`offense-${filter.slug}`}
+                    className="cursor-pointer font-normal"
                   >
-                    <Checkbox
-                      id={`offense-${filter.slug}`}
-                      checked={checked}
-                      onCheckedChange={(value) =>
-                        toggleValue(
-                          filter.slug,
-                          value === true,
-                          setSelectedOffenseTypes,
-                        )
-                      }
-                    />
+                    {filter.name}
+                  </FieldLabel>
+                </Field>
+              );
+            })}
+          </FieldGroup>
+        </FieldSet>
 
-                    <FieldLabel
-                      htmlFor={`offense-${filter.slug}`}
-                      className="cursor-pointer font-normal"
-                    >
-                      {filter.name}
-                    </FieldLabel>
-                  </Field>
-                );
-              })}
-            </FieldGroup>
-          </FieldSet>
+        {/* Intersecções */}
+        <FieldSet>
+          <FieldLegend variant="label">Intersecções</FieldLegend>
 
-          {/* Intersecções */}
-          <FieldSet>
-            <FieldLegend variant="label">Intersecções</FieldLegend>
+          <FieldGroup className="grid grid-cols-2 gap-3 gap-y-2">
+            {intersections.map((filter) => {
+              const checked = selectedIntersections.includes(filter.slug);
 
-            <FieldGroup className="grid grid-cols-2 gap-3 gap-y-2">
-              {intersections.map((filter) => {
-                const checked = selectedIntersections.includes(filter.slug);
+              return (
+                <Field
+                  key={`intersection-${filter.slug}`}
+                  orientation="horizontal"
+                >
+                  <Checkbox
+                    id={`intersection-${filter.slug}`}
+                    checked={checked}
+                    onCheckedChange={(value) =>
+                      toggleValue(
+                        filter.slug,
+                        value === true,
+                        setSelectedIntersections,
+                      )
+                    }
+                  />
 
-                return (
-                  <Field
-                    key={`intersection-${filter.slug}`}
-                    orientation="horizontal"
+                  <FieldLabel
+                    htmlFor={`intersection-${filter.slug}`}
+                    className="cursor-pointer font-normal"
                   >
-                    <Checkbox
-                      id={`intersection-${filter.slug}`}
-                      checked={checked}
-                      onCheckedChange={(value) =>
-                        toggleValue(
-                          filter.slug,
-                          value === true,
-                          setSelectedIntersections,
-                        )
-                      }
-                    />
+                    {filter.name}
+                  </FieldLabel>
+                </Field>
+              );
+            })}
+          </FieldGroup>
+        </FieldSet>
 
-                    <FieldLabel
-                      htmlFor={`intersection-${filter.slug}`}
-                      className="cursor-pointer font-normal"
-                    >
-                      {filter.name}
-                    </FieldLabel>
-                  </Field>
-                );
-              })}
-            </FieldGroup>
-          </FieldSet>
+        {/* Datas */}
+        <FieldSet>
+          <FieldLegend variant="label" className="mb-1">
+            Recorte Temporal
+          </FieldLegend>
 
-          {/* Datas */}
-          <FieldSet>
-            <FieldLegend variant="label" className="mb-1">
-              Recorte Temporal
-            </FieldLegend>
+          <FieldGroup className="grid gap-3 md:grid-cols-2">
+            <Field className="gap-y-1">
+              <FieldLabel
+                className="text-muted-foreground text-xs font-normal"
+                htmlFor="dateStart"
+              >
+                A partir de
+              </FieldLabel>
 
-            <FieldGroup className="grid gap-3 md:grid-cols-2">
-              <Field className="gap-y-1">
-                <FieldLabel
-                  className="text-muted-foreground text-xs font-normal"
-                  htmlFor="dateStart"
-                >
-                  A partir de
-                </FieldLabel>
+              <YearPicker
+                placeholder="Selecione o ano"
+                value={dateStart}
+                onChange={setDateStart}
+              />
+            </Field>
 
-                <YearPicker
-                  placeholder="Selecione o ano"
-                  value={dateStart}
-                  onChange={setDateStart}
-                />
-              </Field>
+            <Field className="gap-y-1">
+              <FieldLabel
+                className="text-muted-foreground text-xs font-normal"
+                htmlFor="dateEnd"
+              >
+                Até
+              </FieldLabel>
 
-              <Field className="gap-y-1">
-                <FieldLabel
-                  className="text-muted-foreground text-xs font-normal"
-                  htmlFor="dateEnd"
-                >
-                  Até
-                </FieldLabel>
+              <YearPicker
+                placeholder="Selecione o ano"
+                value={dateEnd}
+                onChange={setDateEnd}
+              />
+            </Field>
+          </FieldGroup>
+        </FieldSet>
 
-                <YearPicker
-                  placeholder="Selecione o ano"
-                  value={dateEnd}
-                  onChange={setDateEnd}
-                />
-              </Field>
-            </FieldGroup>
-          </FieldSet>
-
-          {dateEnd && dateStart && dateEnd < dateStart ? (
-            <div className="-mt-2 text-red-600/60">
-              A data final deve ser maior que a data de início!
-            </div>
-          ) : null}
-        </div>
-
-        <DialogFooter className="sm:justify-end">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Cancelar
-            </Button>
-          </DialogClose>
-
-          <DialogClose asChild>
-            <Button
-              type="button"
-              onClick={onApply}
-              disabled={Boolean(dateEnd && dateStart && dateEnd < dateStart)}
-            >
-              Aplicar
-            </Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        {dateEnd && dateStart && dateEnd < dateStart ? (
+          <div className="-mt-2 text-red-600/60">
+            A data final deve ser maior que a data de início!
+          </div>
+        ) : null}
+      </div>
+    </DrawerDialog>
   );
 }

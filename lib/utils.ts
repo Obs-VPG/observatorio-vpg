@@ -37,3 +37,11 @@ export function getYearBoundaryISO(year: number, type: "min" | "max"): string {
 
   return date.toISOString();
 }
+
+export function mapArray(array: any[], keyKey: string, valueKey: string) {
+  let res: any = {};
+  array.forEach((item) => {
+    res[item[keyKey]] = item[valueKey];
+  });
+  return res;
+}

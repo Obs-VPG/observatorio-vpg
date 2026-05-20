@@ -33,10 +33,10 @@ export default async function PagePage({
   const doc = (await getDocBySlug("pages", slug)) as Page | null;
   if (!doc) return "Not found.";
   return (
-    <>
+    <div className="">
       <h1
         className={cn(
-          "mt-16 px-6 text-center text-4xl leading-[1.15] font-bold text-balance md:px-10 md:text-5xl lg:text-5xl xl:px-16 xl:text-6xl 2xl:text-7xl",
+          "mt-8 px-6 text-center text-4xl leading-[1.15] font-bold text-balance sm:text-5xl md:px-10 lg:text-6xl xl:px-16 xl:text-6xl 2xl:text-7xl",
         )}
       >
         {doc.name}
@@ -55,6 +55,6 @@ export default async function PagePage({
           />
         );
       })}
-    </>
+    </div>
   );
 }

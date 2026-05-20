@@ -1,6 +1,6 @@
 import { CollectionConfig } from "payload";
 
-import { nameField, slugField } from "./fields/commonFields";
+import { descriptionField, nameField, slugField } from "./fields/commonFields";
 import { richTextBlock } from "./blocks/richTextBlock";
 import { spacerBlock } from "./blocks/spacerBlock";
 import { defaultCTABlock } from "./blocks/defaultCTA";
@@ -23,6 +23,7 @@ export const Pages: CollectionConfig = {
   fields: [
     nameField,
     slugField,
+    descriptionField,
     {
       name: "content",
       label: "Conteúdo",

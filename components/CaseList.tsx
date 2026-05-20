@@ -5,7 +5,7 @@ import CaseInfo from "./CaseInfo";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
-import { SlidersHorizontal, Trash } from "lucide-react";
+import { PlusIcon, SlidersHorizontal, Trash } from "lucide-react";
 import { Input } from "./ui/input";
 import { useMap } from "react-map-gl/maplibre";
 
@@ -14,7 +14,7 @@ export type CaseListProps = {
   setSelectedPoint: Dispatch<SetStateAction<Partial<Case> | null>>;
 };
 
-const perPage = 3;
+const perPage = 12;
 
 export default function CaseList({ cases, setSelectedPoint }: CaseListProps) {
   const { casesMap } = useMap();
@@ -50,9 +50,15 @@ export default function CaseList({ cases, setSelectedPoint }: CaseListProps) {
             </div>
           );
         })}
+      </div>
+      <div className="px-6">
         {renderedCases.length < cases.length && (
-          <Button className="w-full" variant={"outline"} onClick={loadMore}>
-            Exibir mais
+          <Button
+            className="h-16 w-full items-center"
+            variant={"secondary"}
+            onClick={loadMore}
+          >
+            Exibir mais <PlusIcon />
           </Button>
         )}
       </div>

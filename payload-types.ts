@@ -68,6 +68,7 @@ export interface Config {
   blocks: {};
   collections: {
     pages: Page;
+    posts: Post;
     cases: Case;
     definedTerms: DefinedTerm;
     users: User;
@@ -80,6 +81,7 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     cases: CasesSelect<false> | CasesSelect<true>;
     definedTerms: DefinedTermsSelect<false> | DefinedTermsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -141,6 +143,7 @@ export interface Page {
    */
   generateSlug?: boolean | null;
   slug: string;
+  description?: string | null;
   content?:
     | (
         | {
@@ -4144,7 +4147,10 @@ export interface Person {
   filiation?: string | null;
   occupation?: string | null;
   genderIdentity?: (string | null) | DefinedTerm;
+  sexualOrientation?: (string | null) | DefinedTerm;
   racialIdentity?: (string | null) | DefinedTerm;
+  indigenousEthnicGroup?: string | null;
+  quilombola?: boolean | null;
   ageGroup?: (string | null) | DefinedTerm;
   updatedAt: string;
   createdAt: string;
@@ -4164,7 +4170,47 @@ export interface DefinedTerm {
   generateSlug?: boolean | null;
   slug: string;
   description?: string | null;
-  additionalType: 'intersection' | 'offenseType' | 'actors' | 'genderIdentity' | 'racialIdentity' | 'ageGroup';
+  additionalType:
+    | 'intersection'
+    | 'offenseType'
+    | 'actors'
+    | 'genderIdentity'
+    | 'racialIdentity'
+    | 'ageGroup'
+    | 'sexualOrientation';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Postagem do blog.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  name: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  description?: string | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -4222,6 +4268,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'pages';
         value: string | Page;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
       } | null)
     | ({
         relationTo: 'cases';
@@ -4289,6 +4339,7 @@ export interface PagesSelect<T extends boolean = true> {
   name?: T;
   generateSlug?: T;
   slug?: T;
+  description?: T;
   content?:
     | T
     | {
@@ -4388,6 +4439,19 @@ export interface PagesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  name?: T;
+  generateSlug?: T;
+  slug?: T;
+  description?: T;
+  body?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "cases_select".
  */
 export interface CasesSelect<T extends boolean = true> {
@@ -4467,7 +4531,10 @@ export interface PersonsSelect<T extends boolean = true> {
   filiation?: T;
   occupation?: T;
   genderIdentity?: T;
+  sexualOrientation?: T;
   racialIdentity?: T;
+  indigenousEthnicGroup?: T;
+  quilombola?: T;
   ageGroup?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -4521,7 +4588,6 @@ export interface Config1 {
   homepage?: (string | null) | Page;
   mainMenu: {
     label?: string | null;
-    text?: string | null;
     link?: {
       linkType?: ('external' | 'internal') | null;
       url?: string | null;
@@ -4536,26 +4602,6 @@ export interface Config1 {
           } | null);
       targetBlank?: boolean | null;
     };
-    items?:
-      | {
-          link?: {
-            linkType?: ('external' | 'internal') | null;
-            url?: string | null;
-            internalContent?:
-              | ({
-                  relationTo: 'pages';
-                  value: string | Page;
-                } | null)
-              | ({
-                  relationTo: 'cases';
-                  value: string | Case;
-                } | null);
-            targetBlank?: boolean | null;
-          };
-          text?: string | null;
-          id?: string | null;
-        }[]
-      | null;
     id?: string | null;
   }[];
   updatedAt?: string | null;
@@ -4571,7 +4617,6 @@ export interface ConfigSelect<T extends boolean = true> {
     | T
     | {
         label?: T;
-        text?: T;
         link?:
           | T
           | {
@@ -4579,20 +4624,6 @@ export interface ConfigSelect<T extends boolean = true> {
               url?: T;
               internalContent?: T;
               targetBlank?: T;
-            };
-        items?:
-          | T
-          | {
-              link?:
-                | T
-                | {
-                    linkType?: T;
-                    url?: T;
-                    internalContent?: T;
-                    targetBlank?: T;
-                  };
-              text?: T;
-              id?: T;
             };
         id?: T;
       };

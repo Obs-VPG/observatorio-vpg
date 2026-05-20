@@ -19,17 +19,7 @@ export const Config: GlobalConfig = {
       required: true,
       fields: [
         { name: "label", type: "text", label: "Nome", localized: true },
-        { name: "text", type: "textarea", label: "Texto", localized: true },
         linkField,
-        {
-          name: "items",
-          type: "array",
-          label: "Itens",
-          fields: [
-            linkField,
-            { name: "text", type: "textarea", label: "Texto", localized: true },
-          ],
-        },
       ],
     },
   ],

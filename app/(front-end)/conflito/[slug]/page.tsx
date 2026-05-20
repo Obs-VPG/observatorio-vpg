@@ -14,6 +14,7 @@ import { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import config from "@payload-config";
 import { getPayload } from "payload";
+import GlossarioHoverInfo from "@/components/GlossarioHoverInfo";
 const payload = await getPayload({ config });
 
 export type ConflitoPageProps = {
@@ -50,7 +51,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
         ? { year: "numeric", month: "long" }
         : { year: "numeric" };
   return (
-    <div className="mx-auto w-full px-6 pt-6 pb-8 md:px-10 lg:pt-8 lg:pb-12 xl:px-16 xl:pb-20">
+    <div className="mx-auto w-full px-6 pb-8 md:px-10 lg:pb-12 xl:px-16 xl:pb-20">
       <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 pb-4 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:pb-8">
         <Link href="/" className="text-everglade hover:text-everglade-600">
           Observatório de Violência Política de Gênero
@@ -131,8 +132,8 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
           {/* Intersecções */}
           {doc?.intersectionNames && doc.intersectionNames.length > 0 ? (
             <div>
-              <p className="text-muted-foreground mb-1.5 text-xs tracking-wider uppercase md:mb-2">
-                Intersecções do conflito
+              <p className="text-muted-foreground mb-1.5 flex gap-2 text-xs tracking-wider uppercase md:mb-2">
+                Intersecções do conflito <GlossarioHoverInfo />
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {doc?.intersectionNames?.map((intersection, index) => {
@@ -153,8 +154,8 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
 
           {doc?.typeNames && doc.typeNames.length > 0 ? (
             <div>
-              <p className="text-muted-foreground mb-1.5 text-xs tracking-wider uppercase md:mb-2">
-                Tipos de violência
+              <p className="text-muted-foreground mb-1.5 flex gap-2 text-xs tracking-wider uppercase md:mb-2">
+                Tipos de violência <GlossarioHoverInfo />
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {doc?.typeNames?.map((typeName, index) => {
@@ -174,8 +175,8 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
 
           {doc?.actorNames && doc.actorNames.length > 0 ? (
             <div>
-              <p className="text-muted-foreground mb-1.5 text-xs tracking-wider uppercase md:mb-2">
-                Atores envolvidos
+              <p className="text-muted-foreground mb-1.5 flex gap-2 text-xs tracking-wider uppercase md:mb-2">
+                Atores envolvidos <GlossarioHoverInfo />
               </p>
               <div className="flex flex-wrap items-center gap-2">
                 {doc?.actorNames?.map((typeName, index) => {

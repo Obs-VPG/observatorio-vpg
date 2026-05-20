@@ -9,7 +9,7 @@
   --color-light-green: #e9f3ef;
   --color-grey: #626262;
   --color-black: #1c1e1d;
-  --color-white: #f5f5f5;
+  --color-off-white: #f5f5f5;
   --color-yellow-orange-50: #fff7eb;
   --color-yellow-orange-100: #fee9c7;
   --color-yellow-orange-200: #fed289;
@@ -153,7 +153,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground bg-white;
   }
   html {
     @apply font-sans;
