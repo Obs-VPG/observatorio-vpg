@@ -29,7 +29,7 @@ export default function GlossaryTermCategory({
     scrollYProgress,
     [0, 0.01, 0.99, 1],
     {
-      opacity2: [0.1, 1, 1, 0.1],
+      opacity2: [0.5, 1, 1, 0.5],
       color: ["#000", "#f77409", "#f77409", "#000000"],
     },
   );
@@ -40,11 +40,11 @@ export default function GlossaryTermCategory({
           style={{
             opacity: opacity2,
           }}
-          className="mb-5 text-3xl font-extrabold"
+          className="mb-5 text-3xl font-bold"
         >
           Glossário{" "}
         </motion.h1>
-        <ul className="text-yellow-orange-500 font-serif">
+        <ul className="text-yellow-orange-500">
           {groupKeys.map((key: string) => {
             // @ts-ignore
             return (

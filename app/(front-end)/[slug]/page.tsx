@@ -33,10 +33,10 @@ export default async function PagePage({
   const doc = (await getDocBySlug("pages", slug)) as Page | null;
   if (!doc) return "Not found.";
   return (
-    <div className="">
+    <div className="py-4 md:py-8 xl:py-10">
       <h1
         className={cn(
-          "px-6 pt-12 text-center text-4xl leading-[1.15] font-bold text-balance sm:text-5xl md:px-10 lg:text-6xl xl:px-16 xl:pt-16 xl:text-6xl 2xl:text-7xl",
+          "text-everglade mt-8 mb-10 px-6 text-[10svw] leading-none font-bold text-balance sm:mx-auto sm:text-center md:px-10 md:text-7xl lg:max-w-5/6 xl:px-16 xl:pt-16 xl:text-8xl",
         )}
       >
         {doc.name}

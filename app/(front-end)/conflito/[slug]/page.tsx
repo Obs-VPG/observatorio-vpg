@@ -51,8 +51,8 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
         ? { year: "numeric", month: "long" }
         : { year: "numeric" };
   return (
-    <div className="mx-auto w-full px-6 pt-4 pb-8 md:px-10 md:pt-6 lg:pt-8 lg:pb-12 xl:px-16 xl:pb-20">
-      <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 pb-4 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:pb-8">
+    <div className="mx-auto w-full px-6 pb-8 md:px-10 lg:pb-12 xl:px-16 xl:pb-20">
+      <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 p-6 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:py-8">
         <Link href="/" className="text-everglade hover:text-everglade-600">
           Observatório de Violência Política de Gênero
         </Link>{" "}
@@ -84,7 +84,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
       ) : null}
       <h1
         className={cn(
-          "text-everglade mb-8 text-center text-3xl leading-none font-black text-balance md:text-4xl lg:mb-8 lg:text-5xl xl:mb-12 xl:text-[5svw]",
+          "text-everglade mx-auto mb-8 px-6 text-center text-[8svw] leading-none font-bold text-balance md:px-10 md:text-6xl lg:max-w-5/6 xl:px-16 xl:pt-16 xl:text-7xl",
         )}
       >
         {doc.name}
