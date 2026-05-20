@@ -51,7 +51,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
         ? { year: "numeric", month: "long" }
         : { year: "numeric" };
   return (
-    <div className="mx-auto w-full px-6 pb-8 md:px-10 lg:pb-12 xl:px-16 xl:pb-20">
+    <div className="mx-auto w-full px-6 pt-4 pb-8 md:px-10 md:pt-6 lg:pt-8 lg:pb-12 xl:px-16 xl:pb-20">
       <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 pb-4 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:pb-8">
         <Link href="/" className="text-everglade hover:text-everglade-600">
           Observatório de Violência Política de Gênero

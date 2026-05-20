@@ -28,10 +28,10 @@ export default async function Nav({}: NavProps) {
       >
         <Logo className="h-10 w-fit" />
       </Link>
-      <div className="flex items-center">
+      <div className="hidden items-center md:flex">
         {config.mainMenu.map((menuItem) => {
           return (
-            <Button variant={"ghost"} asChild>
+            <Button key={`menu-nav-${menuItem.id}`} variant={"ghost"} asChild>
               <DynamicContentLink
                 slug={(menuItem.link!.internalContent?.value as any)?.slug}
                 collection={menuItem.link!.internalContent?.relationTo || ""}

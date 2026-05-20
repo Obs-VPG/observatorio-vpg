@@ -37,8 +37,7 @@ export default async function PostPage({
   const publishDate = new Date(doc.createdAt);
   return (
     <div className="mx-auto w-fit">
-      {" "}
-      <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 pb-4 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:pb-8">
+      <div className="flex flex-wrap items-center justify-center gap-2 gap-y-1 py-4 text-center text-xs uppercase opacity-30 duration-200 hover:opacity-100 lg:py-8">
         <Link href="/" className="text-everglade hover:text-everglade-600">
           Observatório de Violência Política de Gênero
         </Link>{" "}

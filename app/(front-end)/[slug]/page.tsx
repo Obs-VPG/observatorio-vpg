@@ -36,7 +36,7 @@ export default async function PagePage({
     <div className="">
       <h1
         className={cn(
-          "mt-8 px-6 text-center text-4xl leading-[1.15] font-bold text-balance sm:text-5xl md:px-10 lg:text-6xl xl:px-16 xl:text-6xl 2xl:text-7xl",
+          "px-6 pt-12 text-center text-4xl leading-[1.15] font-bold text-balance sm:text-5xl md:px-10 lg:text-6xl xl:px-16 xl:pt-16 xl:text-6xl 2xl:text-7xl",
         )}
       >
         {doc.name}
