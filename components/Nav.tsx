@@ -79,7 +79,11 @@ export default async function Nav({}: NavProps) {
                     collection={
                       menuItem.link!.internalContent?.relationTo || ""
                     }
-                    href={menuItem.link!.url || undefined}
+                    href={
+                      menuItem.link?.linkType === "external"
+                        ? menuItem.link!.url
+                        : undefined
+                    }
                   >
                     {menuItem.label}
                   </DynamicContentLink>

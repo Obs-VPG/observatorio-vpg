@@ -6,7 +6,7 @@ type DynamicContentLinkProps = {
   slug: string;
   collection: string;
   children: React.ReactNode | undefined;
-  href?: string;
+  href?: string | null;
   className?: string;
   onClick?: any;
   target?: any;

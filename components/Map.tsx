@@ -1,9 +1,12 @@
 "use client";
 
 import Map, {
+  FullscreenControl,
   Layer,
   MapRef,
+  NavigationControl,
   Popup,
+  ScaleControl,
   Source,
   StyleSpecification,
 } from "react-map-gl/maplibre";
@@ -129,7 +132,6 @@ export default function MapComponent({
       onMouseLeave={onLeave}
       dragRotate={false}
       touchPitch={false}
-      touchZoomRotate={false}
       onLoad={() => {
         sortCases(mapRef?.current?.getCenter());
       }}
@@ -137,6 +139,9 @@ export default function MapComponent({
         sortCases(mapRef?.current?.getCenter());
       }}
     >
+      <FullscreenControl position="top-left" />
+      <NavigationControl position="top-left" />
+      <ScaleControl />
       <Source
         id="cases"
         type="geojson"
