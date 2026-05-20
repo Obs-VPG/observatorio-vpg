@@ -34,7 +34,7 @@ export default async function Nav({}: NavProps) {
         title="Observatório de Violência Política de Gênero"
         className="rounded-b-2xl p-3 px-4"
       >
-        <Logo className="h-10 w-fit" />
+        <Logo className="h-10 w-auto" />
       </Link>
       <div className="hidden items-center md:flex">
         {config.mainMenu.map((menuItem) => {
