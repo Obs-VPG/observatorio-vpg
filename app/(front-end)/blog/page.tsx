@@ -25,7 +25,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <div className="px-6 md:px-10 xl:px-16">
         <h1
           className={cn(
-            "text-everglade mt-8 mb-10 px-6 text-[12svw] leading-none font-bold text-balance sm:text-center sm:leading-[1.15] md:px-10 lg:text-7xl xl:px-16 xl:pt-16 xl:text-6xl 2xl:text-8xl",
+            "text-everglade mt-8 mb-10 px-6 text-[12svw] leading-none font-bold text-balance sm:text-center sm:leading-[1.15] md:mb-16 md:px-10 lg:text-8xl xl:px-16",
           )}
         >
           Blog

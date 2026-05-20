@@ -34,7 +34,7 @@ export default function CaseList({ cases, setSelectedPoint }: CaseListProps) {
   return (
     <>
       {/* List */}
-      <div className="relative grid w-full divide-y bg-white px-6">
+      <div className="relative grid w-full divide-y bg-white px-6 pb-3">
         {renderedCases?.map((CASE, index) => {
           return (
             <div
