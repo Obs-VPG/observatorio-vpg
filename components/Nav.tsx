@@ -52,10 +52,8 @@ export default async function Nav({}: NavProps) {
         })}
       </div>
       <Drawer>
-        <DrawerTrigger asChild>
-          <Button variant={"ghost"} className="md:hidden" size="icon-lg">
-            <MenuIcon className="size-5" />
-          </Button>
+        <DrawerTrigger className="md:hidden">
+          <MenuIcon className="size-5" />
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
