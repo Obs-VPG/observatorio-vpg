@@ -56,18 +56,17 @@ export default function MapPage({ cases, filters }: MapPageProps) {
     <MapProvider>
       <div className="bg-light-green relative md:flex">
         <Button
-          className="absolute right-4 bottom-4 z-10 h-10 rounded-full border border-black/10 shadow-lg md:hidden"
-          variant={"secondary"}
+          className="bg-everglade absolute right-4 bottom-4 z-10 h-12 gap-3 rounded-full border border-black/10 text-lg font-medium tracking-widest text-white uppercase shadow-lg md:hidden"
           onClick={() => setShowMap((prev) => !prev)}
         >
           {showMap ? (
             <>
-              <List className="size-4" />
+              <List className="size-5" />
               Lista
             </>
           ) : (
             <>
-              <EarthIcon className="size-4" />
+              <EarthIcon className="size-5" />
               Mapa
             </>
           )}

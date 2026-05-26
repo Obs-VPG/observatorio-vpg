@@ -154,6 +154,7 @@ export default function Footer(props: FooterProps) {
           Desenvolvido por{" "}
           <Link
             href="https://www.viniciusofp.com.br"
+            target="_blank"
             className="font-medium hover:text-black"
           >
             viniciusofp
