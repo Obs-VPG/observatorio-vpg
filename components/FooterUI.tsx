@@ -66,7 +66,7 @@ export default function Footer(props: FooterProps) {
         style={{ width, borderRadius }}
         className="bg-yellow-orange text-everglade relative z-3 mx-auto min-h-[80svh] overflow-hidden px-6 py-12 max-md:w-full! max-md:transform-[translateY(0)]! max-md:rounded-none! md:min-w-fit [&_img]:h-10"
       >
-        <Logo className="**:fill-everglade! mx-auto my-12 h-16 w-auto max-w-5/6" />
+        <Logo className="**:fill-everglade! mx-auto my-12 h-16 w-auto max-w-5/6 lg:h-20" />
         <hr className="border-yellow-orange-400 my-16" />{" "}
         <div className="mt-16 grid items-center justify-center md:flex">
           {menu.map((menuItem) => {

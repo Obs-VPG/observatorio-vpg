@@ -37,7 +37,7 @@ export default async function PagePage({
     <DivFadeIn className="py-4 md:py-8 xl:py-10">
       <h1
         className={cn(
-          "text-everglade mt-8 mb-10 px-6 text-[10svw] leading-none font-medium text-balance sm:mx-auto sm:text-center md:px-10 md:text-7xl lg:max-w-5/6 xl:px-16 xl:pt-16 xl:text-8xl",
+          "text-everglade mt-8 mb-10 px-6 text-[10svw] leading-none font-medium text-balance sm:mx-auto sm:text-center md:px-10 md:text-7xl lg:max-w-5/6 xl:px-1 xl:text-8xl",
         )}
       >
         {doc.name}

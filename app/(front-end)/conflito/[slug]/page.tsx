@@ -85,7 +85,7 @@ export default async function ConflitoPage({ params }: ConflitoPageProps) {
       ) : null}
       <h1
         className={cn(
-          "text-everglade mx-auto mb-8 px-6 text-center text-[8svw] leading-none font-medium text-balance md:px-10 md:text-6xl lg:max-w-5/6 xl:px-16 xl:pt-16 xl:text-7xl",
+          "text-everglade mx-auto mb-8 px-6 text-center text-[8svw] leading-none font-medium text-balance md:px-10 md:text-6xl lg:max-w-5/6 xl:px-16 xl:text-7xl",
         )}
       >
         {doc.name}

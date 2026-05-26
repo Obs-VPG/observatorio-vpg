@@ -14,10 +14,11 @@ import Fade from "embla-carousel-fade";
 import { useEffect, useMemo, useState } from "react";
 import Map, { Marker, StyleSpecification } from "react-map-gl/maplibre";
 import Pin from "../Pin";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Eye } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import DivFadeIn from "../DivFadeIn";
 
 export type LastCasesProps = { cases: Case[] };
 
@@ -42,9 +43,11 @@ export default function LastCases(props: LastCasesProps) {
     });
   }, [api]);
   return (
-    <div className="px-6 py-[10svh] md:px-10 xl:px-16">
+    <DivFadeIn className="px-6 py-[10svh] md:px-10 xl:px-16">
       <div className="bg-light-green items-center justify-center gap-8 rounded-2xl p-3 md:grid md:grid-cols-2">
-        <div className="block">
+        <div className="relative block">
+          <div className="from-light-green absolute top-0 left-0 z-5 h-full w-12 bg-linear-to-r to-transparent"></div>
+          <div className="from-light-green absolute top-0 right-0 z-5 h-full w-12 bg-linear-to-l to-transparent"></div>
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}
@@ -52,7 +55,6 @@ export default function LastCases(props: LastCasesProps) {
               Autoplay({
                 delay: 5000,
               }),
-              Fade(),
             ]}
           >
             <div className="text-yellow-orange mb-4 flex items-center justify-center gap-8">
@@ -144,11 +146,12 @@ export default function LastCases(props: LastCasesProps) {
             </div>
           </Carousel>
         </div>
-        <div className="relative h-96 max-h-132 overflow-hidden rounded-xl md:block md:h-full">
+        <div className="relative h-96 max-h-132 overflow-hidden rounded-xl border md:block md:h-full">
           <Link
             href="/mapa"
-            className="absolute z-5 flex h-full w-full items-center justify-center rounded-xl border bg-white/50 p-6 backdrop-blur-sm duration-500 hover:opacity-100 md:opacity-0"
+            className="absolute z-5 flex h-full w-full flex-col items-center justify-center rounded-xl bg-white/50 p-6 backdrop-blur-sm duration-500 hover:opacity-100 md:opacity-0"
           >
+            <Eye className="text-everglade fill-yellow-orange [&_circle]:fill-everglade mb-4 size-16" />
             <p className="decoration-yellow-orange text-center text-2xl text-balance underline decoration-2 underline-offset-4">
               Navegue pelo mapa de casos de violência política de gênero.
             </p>
@@ -179,6 +182,6 @@ export default function LastCases(props: LastCasesProps) {
           </Map>
         </div>
       </div>
-    </div>
+    </DivFadeIn>
   );
 }
