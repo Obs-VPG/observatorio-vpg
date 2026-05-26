@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import {
-  Gabarito,
-  Arvo,
-  Andada_Pro,
-  Geist_Mono,
-  Inter,
-  IBM_Plex_Sans,
-} from "next/font/google";
+import { Andada_Pro, Gabarito, Geist_Mono } from "next/font/google";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
 
+import Footer from "@/components/Footer";
 import Nav from "@/components/Nav";
-import Footer from "@/collections/Footer";
 
 const sans = Gabarito({
   subsets: ["latin"],

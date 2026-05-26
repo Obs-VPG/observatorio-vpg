@@ -1,27 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useScroll, useTransform, motion } from "motion/react";
+import { useScroll, useTransform, motion, cubicBezier } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import neim from "@/public/logos/neim.jpg";
 import ufba from "@/public/logos/ufba.jpg";
 import ids from "@/public/logos/ids.jpg";
 import cb from "@/public/logos/cb.jpg";
+import Logo from "./Logo";
+import { Case, Page } from "@/payload-types";
+import { DynamicContentLink } from "./DynamicContentLink";
+import { Button } from "./ui/button";
 
-export type FooterProps = {};
+export type FooterProps = {
+  menu: {
+    label?: string | null;
+    link?: {
+      linkType?: ("external" | "internal") | null;
+      url?: string | null;
+      internalContent?:
+        | ({
+            relationTo: "pages";
+            value: string | Page;
+          } | null)
+        | ({
+            relationTo: "cases";
+            value: string | Case;
+          } | null);
+      targetBlank?: boolean | null;
+    };
+    id?: string | null;
+  }[];
+};
 
 export default function Footer(props: FooterProps) {
+  const { menu } = props;
   const pathname = usePathname();
   if (pathname === "/mapa") return null;
-  return (
-    <footer>
-      <LogoBar />
-    </footer>
-  );
-}
-
-const LogoBar = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -31,15 +47,41 @@ const LogoBar = () => {
     target: ref,
     offset: ["start center", "end center"],
   });
-  const width = useTransform(scrollYProgress, [0, 1], ["50%", "100%"]);
-  const borderRadius = useTransform(scrollYProgress, [0, 1], ["2rem", "0rem"]);
+  const { width, borderRadius } = useTransform(scrollYProgress, [0, 1], {
+    width: ["50%", "100%"],
+    borderRadius: ["2rem", "0rem"],
+  });
   return (
-    <>
+    <footer>
       <motion.div
         ref={ref}
         style={{ width, borderRadius }}
-        className="bg-light-green mx-auto min-w-fit px-6 py-16 [&_img]:h-10"
+        className="bg-light-green relative z-3 mx-auto overflow-hidden px-6 py-12 md:min-w-fit [&_img]:h-10"
       >
+        <Logo className="mx-auto my-12 h-16 w-auto max-w-5/6" />
+        <hr className="my-16" />{" "}
+        <div className="mt-16 grid items-center justify-center md:flex">
+          {menu.map((menuItem) => {
+            return (
+              <Button
+                key={`menu-nav-${menuItem.id}`}
+                variant={"ghost"}
+                className="px-3 lg:px-5"
+                asChild
+              >
+                <DynamicContentLink
+                  slug={(menuItem.link!.internalContent?.value as any)?.slug}
+                  collection={menuItem.link!.internalContent?.relationTo || ""}
+                  href={menuItem.link!.url || undefined}
+                  className="text-xs tracking-wider uppercase"
+                >
+                  {menuItem.label}
+                </DynamicContentLink>
+              </Button>
+            );
+          })}
+        </div>
+        <hr className="my-16" />
         <div className="flex flex-col justify-center gap-12 mix-blend-multiply md:flex-row">
           <div className="flex flex-col items-center gap-4 md:items-start">
             <div className="text-xs tracking-widest uppercase opacity-80">
@@ -97,7 +139,20 @@ const LogoBar = () => {
             </div>
           </div>
         </div>
+        <p className="text-muted-foreground mt-12 w-full text-center text-xs leading-loose">
+          Observatório de Violência Política de Gênero | Núcleo de Estudos
+          Interdisciplinares sobre a Mulher - Universidade Federal da Bahia{" "}
+          <br />
+          Desenvolvido por{" "}
+          <Link
+            href="https://www.viniciusofp.com.br"
+            className="font-medium hover:text-black"
+          >
+            viniciusofp
+          </Link>
+          .
+        </p>
       </motion.div>
-    </>
+    </footer>
   );
-};
+}
