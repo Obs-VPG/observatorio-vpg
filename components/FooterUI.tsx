@@ -56,7 +56,7 @@ export default function Footer(props: FooterProps) {
       <motion.div
         ref={ref}
         style={{ width, borderRadius }}
-        className="bg-light-green relative z-3 mx-auto overflow-hidden px-6 py-12 md:min-w-fit [&_img]:h-10"
+        className="bg-light-green relative z-3 mx-auto overflow-hidden px-6 py-12 max-md:w-full! max-md:rounded-none! md:min-w-fit [&_img]:h-10"
       >
         <Logo className="mx-auto my-12 h-16 w-auto max-w-5/6" />
         <hr className="my-16" />{" "}

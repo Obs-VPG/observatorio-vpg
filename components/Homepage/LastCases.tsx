@@ -51,7 +51,7 @@ export default function LastCases(props: LastCasesProps) {
                 onClick={() => api?.scrollPrev()}
               />
             </button>
-            <p className="text-xs font-medium tracking-wider text-stone-800 uppercase">
+            <p className="text-center text-xs font-medium tracking-wider text-stone-800 uppercase">
               Últimos casos registrados
             </p>
             <button
@@ -135,7 +135,7 @@ export default function LastCases(props: LastCasesProps) {
         <div className="relative h-96 max-h-132 overflow-hidden rounded-xl md:block md:h-full">
           <Link
             href="/mapa"
-            className="absolute z-5 flex h-full w-full items-center justify-center rounded-xl border bg-white/50 p-6 opacity-0 backdrop-blur-sm duration-500 hover:opacity-100"
+            className="absolute z-5 flex h-full w-full items-center justify-center rounded-xl border bg-white/50 p-6 backdrop-blur-sm duration-500 hover:opacity-100 md:opacity-0"
           >
             <p className="decoration-yellow-orange text-center text-2xl text-balance underline decoration-2 underline-offset-4">
               Navegue pelo mapa de casos de violência política de gênero.

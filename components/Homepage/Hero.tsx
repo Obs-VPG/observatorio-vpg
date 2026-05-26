@@ -13,14 +13,14 @@ export default function Hero(props: HeroProps) {
         transition={{ duration: 0.3 }}
         className="mt-[10vw] flex flex-col items-center justify-center px-6 text-center lg:mb-8"
       >
-        <motion.h1 className="text-muted-foreground mb-8 text-sm tracking-widest uppercase md:text-base xl:text-lg">
+        <motion.h1 className="text-muted-foreground mb-6 text-sm tracking-widest text-balance uppercase md:mb-8 md:text-base xl:text-lg">
           Observatório de Violência Política de Gênero
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5, ease: "easeInOut" }}
-          className="text-everglade mb-[5svw] text-[clamp(2.25rem,4vw,4rem)] leading-[1.1] font-medium text-balance md:max-w-5/6"
+          className="text-everglade mb-6 text-[clamp(2.25rem,4vw,4rem)] leading-[1.1] font-medium text-balance md:mb-[5svw] md:max-w-5/6"
         >
           Uma iniciativa NEIM-UFBA para a promoção de um ambiente político justo
           e seguro para pessoas de todos os gêneros.
@@ -29,7 +29,7 @@ export default function Hero(props: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-          className="grid items-center gap-4 gap-y-1 sm:flex lg:gap-8"
+          className="grid items-center gap-4 sm:flex lg:gap-8"
         >
           <Link
             href="/quem-somos"
