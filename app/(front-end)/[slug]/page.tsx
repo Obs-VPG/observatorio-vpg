@@ -1,5 +1,6 @@
 // import BlockRenderer from '@/components/blocks/BlockRenderer';
 import BlockRenderer from "@/components/blocks/BlockRenderer";
+import DivFadeIn from "@/components/DivFadeIn";
 import { getDocBySlug } from "@/lib/local-api";
 import { cn } from "@/lib/utils";
 
@@ -33,7 +34,7 @@ export default async function PagePage({
   const doc = (await getDocBySlug("pages", slug)) as Page | null;
   if (!doc) return "Not found.";
   return (
-    <div className="py-4 md:py-8 xl:py-10">
+    <DivFadeIn className="py-4 md:py-8 xl:py-10">
       <h1
         className={cn(
           "text-everglade mt-8 mb-10 px-6 text-[10svw] leading-none font-medium text-balance sm:mx-auto sm:text-center md:px-10 md:text-7xl lg:max-w-5/6 xl:px-16 xl:pt-16 xl:text-8xl",
@@ -55,6 +56,6 @@ export default async function PagePage({
           />
         );
       })}
-    </div>
+    </DivFadeIn>
   );
 }
