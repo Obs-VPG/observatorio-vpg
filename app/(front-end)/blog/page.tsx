@@ -6,6 +6,8 @@ import {
 } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
 import config from "@payload-config";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { getPayload } from "payload";
 const payload = await getPayload({ config });
 
@@ -13,13 +15,13 @@ export type BlogPageProps = { searchParams: Promise<{ page: string }> };
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { page } = await searchParams;
-  const data = await payload.find({
+  const { docs, totalPages, nextPage, prevPage } = await payload.find({
     collection: "posts",
-    limit: 12,
+    limit: 24,
     page: page ? parseInt(page) : 1,
     select: { name: true, slug: true, description: true, createdAt: true },
   });
-  if (!(data.docs.length > 0)) return null;
+  if (!(docs.length > 0)) return null;
   return (
     <div className="mb-16 py-4 md:py-8 xl:py-10">
       <div className="px-6 md:px-10 xl:px-16">
@@ -32,7 +34,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         </h1>
       </div>
       <div className="grid divide-y border-y">
-        {data.docs.map((doc) => {
+        {docs.map((doc) => {
           const publishDate = new Date(doc.createdAt);
           return (
             <DynamicContentLink
@@ -53,6 +55,32 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
             </DynamicContentLink>
           );
         })}
+      </div>
+      <div className="footer my-8 grid grid-cols-3 items-center px-6 text-sm tracking-wide md:px-10 xl:px-16">
+        <div>
+          {prevPage ? (
+            <Link
+              href={`/blog?page=${prevPage}`}
+              className="text-everglade flex items-center justify-start gap-1 opacity-80 duration-200 hover:opacity-100"
+            >
+              <ArrowLeft className="size-4" />
+              Mais novos
+            </Link>
+          ) : null}
+        </div>
+        <div className="flex items-center justify-center text-stone-400 uppercase">
+          {page ? page : 1}/{totalPages}
+        </div>
+        <div>
+          {nextPage ? (
+            <Link
+              href={`/blog?page=${nextPage}`}
+              className="text-everglade flex items-center justify-end gap-1 opacity-80 duration-200 hover:opacity-100"
+            >
+              Mais antigos <ArrowRight className="size-4" />
+            </Link>
+          ) : null}
+        </div>
       </div>
     </div>
   );
