@@ -49,6 +49,7 @@ export default async function Nav({}: NavProps) {
                 slug={(menuItem.link!.internalContent?.value as any)?.slug}
                 collection={menuItem.link!.internalContent?.relationTo || ""}
                 href={menuItem.link!.url || undefined}
+                className="text-xs tracking-wider uppercase"
               >
                 {menuItem.label}
               </DynamicContentLink>

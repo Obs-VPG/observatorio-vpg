@@ -52,8 +52,8 @@ export default async function PostPage({
           "mx-auto mb-6 grid w-fit max-w-full justify-center px-6 md:mb-8 md:px-10 lg:mb-10 xl:px-16",
         )}
       >
-        <div className="prose lg:prose-lg xl:prose-xl prose-a:duration-75 prose-a:decoration-yellow-orange prose-a:hover:text-everglade decoration-everglade prose-a:decoration-[0.2ex] prose-a:underline-offset-[0.2ex] prose-h1:font-bold text-pretty">
-          <h1 className="mb-3!">{doc.name}</h1>
+        <div className="prose lg:prose-lg xl:prose-xl prose-headings:font-medium prose-a:duration-75 prose-a:decoration-yellow-orange prose-a:hover:text-everglade decoration-everglade prose-a:decoration-[0.2ex] prose-a:underline-offset-[0.2ex] text-pretty">
+          <h1 className="mb-5!">{doc.name}</h1>
           <p className="text-muted-foreground my-0!">
             {publishDate.toLocaleDateString("pt-BR", {
               day: "numeric",
@@ -62,7 +62,9 @@ export default async function PostPage({
             })}
           </p>
           {doc.description ? (
-            <p className="lead mb-12!">{doc.description}</p>
+            <p className="lead text-muted-foreground mb-12!">
+              {doc.description}
+            </p>
           ) : null}
           <CustomRichText lexicalData={doc.body as any} />
         </div>

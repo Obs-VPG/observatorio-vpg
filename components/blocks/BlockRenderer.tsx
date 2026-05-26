@@ -34,7 +34,7 @@ export default async function BlockRenderer({
           block.centered && "justify-center",
         )}
       >
-        <div className="prose lg:prose-lg xl:prose-xl prose-a:duration-75 prose-a:decoration-yellow-orange prose-a:hover:text-everglade decoration-everglade prose-a:decoration-[0.2ex] prose-a:underline-offset-[0.2ex] prose-h1:font-bold text-pretty">
+        <div className="prose-headings:font-medium prose lg:prose-lg xl:prose-xl prose-a:duration-75 prose-a:decoration-yellow-orange prose-a:hover:text-everglade decoration-everglade prose-a:decoration-[0.2ex] prose-a:underline-offset-[0.2ex] text-pretty">
           <CustomRichText lexicalData={block.body as any} />
         </div>
       </div>

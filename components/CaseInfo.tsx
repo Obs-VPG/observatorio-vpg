@@ -13,12 +13,14 @@ export type CaseInfoProps = {
   data: Partial<Case>;
   size?: "md" | "sm";
   setSelectedPoint?: Dispatch<SetStateAction<Partial<Case> | null>>;
+  showCenter?: boolean;
 };
 
 export default function CaseInfo({
   data,
   size = "sm",
   setSelectedPoint,
+  showCenter = true,
 }: CaseInfoProps) {
   const id = useId();
   const { casesMap } = useMap();
@@ -60,7 +62,7 @@ export default function CaseInfo({
       <h2
         className={cn(
           "mb-4 text-base leading-tight font-bold text-pretty",
-          size === "md" && "mb-2 text-lg lg:text-xl",
+          size === "md" && "mb-3 text-xl lg:text-2xl",
         )}
       >
         {data.name}
@@ -123,7 +125,7 @@ export default function CaseInfo({
             Acessar caso <ArrowRight />
           </Button>
         </Link>
-        {size === "md" && (
+        {size === "md" && showCenter && (
           <Button
             variant={"ghost"}
             className="hidden font-light hover:border-neutral-200 md:flex"

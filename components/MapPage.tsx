@@ -35,7 +35,7 @@ export default function MapPage({ cases, filters }: MapPageProps) {
     setSorteredCases(cases);
   }, [cases]);
   const onSortCases = (center: { lng: number; lat: number }) => {
-    const centerPoint = point([center?.lng, center?.lat]);
+    const centerPoint = point([center?.lng || 0, center?.lat || 0]);
 
     const sortedCases = [...cases].sort((a, b) => {
       const distA = distance(centerPoint, point(a.geo as [number, number]));

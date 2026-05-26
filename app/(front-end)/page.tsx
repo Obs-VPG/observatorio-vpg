@@ -1,6 +1,5 @@
-import BlockRenderer from "@/components/blocks/BlockRenderer";
-import Logo from "@/components/Logo";
-import Logos from "@/components/Logos";
+import Hero from "@/components/Homepage/Hero";
+import LastCases from "@/components/Homepage/LastCases";
 import { Page } from "@/payload-types";
 import config from "@payload-config";
 import { Metadata } from "next";
@@ -20,19 +19,15 @@ export default async function IndexPage({}) {
   });
   const doc = data.homepage as Page;
   if (!doc) return "Not found.";
+  const { docs: cases } = await payload.find({
+    collection: "cases",
+    limit: 5,
+    sort: "-createdAt",
+  });
   return (
-    <div className="flex h-[calc(100svh-4rem)] flex-col items-center justify-between">
-      <div className="flex h-full flex-col items-center justify-center">
-        <Logo className="max-w-5/6" />
-      </div>
-
-      <div className="grid py-8">
-        <div className="border-everglade/5 relative overflow-hidden bg-[#fff] p-4 px-1">
-          <div className="pointer-events-none absolute top-0 left-1 z-2 h-full w-36 bg-linear-to-r from-[#fff] to-transparent"></div>
-          <div className="pointer-events-none absolute top-0 right-1 z-2 h-full w-36 bg-linear-to-l from-[#fff] to-transparent"></div>
-          <Logos />
-        </div>
-      </div>
-    </div>
+    <>
+      <Hero />
+      <LastCases cases={cases} />
+    </>
   );
 }
