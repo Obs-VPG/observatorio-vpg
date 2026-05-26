@@ -169,7 +169,7 @@ export default function SearchBar({ filters: filtersData }: SearchBarProps) {
 
         <SearchFilters filters={filtersData} />
       </div>
-      {intersection || offenseType || startDate || endDate ? (
+      {intersection || offenseType || startDate || endDate || q ? (
         <div className="flex flex-wrap gap-1.5">
           {intersection
             ? intersection.split(",").map((item) => {

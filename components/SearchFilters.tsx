@@ -129,8 +129,7 @@ export default function SearchFilters({ filters }: SearchFiltersProps) {
       trigger={
         <Button className="relative px-3" variant="outline">
           Filtros
-          {q ||
-          dateEnd ||
+          {dateEnd ||
           dateStart ||
           selectedIntersections.length > 0 ||
           selectedOffenseTypes.length > 0 ? (

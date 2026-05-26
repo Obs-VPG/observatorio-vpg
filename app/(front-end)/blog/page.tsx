@@ -23,11 +23,11 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   });
   if (!(docs.length > 0)) return null;
   return (
-    <div className="mb-16 py-4 md:py-8 xl:py-10">
+    <div className="mb-16 py-4 md:pt-8 xl:pt-10">
       <div className="px-6 md:px-10 xl:px-16">
         <h1
           className={cn(
-            "text-everglade mt-8 mb-10 px-6 text-[12svw] leading-none font-medium text-balance sm:text-center sm:leading-[1.15] md:mb-16 md:px-10 lg:text-8xl xl:px-16",
+            "text-everglade mt-8 mb-10 px-6 text-[clamp(1rem,3svw,3rem)] leading-none tracking-widest text-balance uppercase sm:text-center sm:leading-[1.15] md:mb-16 md:px-10 xl:px-16",
           )}
         >
           Blog
@@ -41,12 +41,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
               key={doc.id}
               slug={doc.slug}
               collection="posts"
-              className="hover:bg-yellow-orange/40 relative flex flex-col gap-6 gap-y-2 px-6 py-6 md:flex-row md:items-center md:px-10 md:py-3 xl:px-16"
+              className="hover:bg-light-green relative flex flex-col gap-6 gap-y-2 px-6 py-6 md:flex-row md:items-center md:px-10 md:py-3 xl:px-16"
             >
-              <p className="text-evergreen">
+              <p className="text-muted-foreground text-sm tracking-widest">
                 {publishDate.toLocaleDateString("pt-BR")}
               </p>
-              <h2 className="w-full text-2xl leading-tight font-bold text-pretty md:line-clamp-1 md:text-3xl">
+              <h2 className="text-everglade w-full text-[clamp(1.5rem,3svw,1.875rem)] leading-tight font-medium text-pretty md:line-clamp-1">
                 {doc.name}
               </h2>
               <p className="text-muted-foreground max-w-prose text-sm md:hidden">
@@ -56,7 +56,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           );
         })}
       </div>
-      <div className="footer my-8 grid grid-cols-3 items-center px-6 text-sm tracking-wide md:px-10 xl:px-16">
+      <div className="footer mt-8 grid grid-cols-3 items-center px-6 text-sm tracking-wide md:px-10 xl:px-16">
         <div>
           {prevPage ? (
             <Link

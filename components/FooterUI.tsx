@@ -7,6 +7,7 @@ import {
   motion,
   cubicBezier,
   easeIn,
+  easeInOut,
 } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
@@ -47,23 +48,22 @@ export default function Footer(props: FooterProps) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start center", "start 20%"],
+    offset: ["start 75%", "start center"],
   });
-  const { width, borderRadius, y } = useTransform(
+  const { width, borderRadius } = useTransform(
     scrollYProgress,
     [0, 1],
     {
       width: ["50%", "100%"],
       borderRadius: ["100%", "0%"],
-      y: [200, 0],
     },
-    { ease: easeIn },
+    { ease: easeInOut },
   );
   return (
     <footer>
       <motion.div
         ref={ref}
-        style={{ width, borderRadius, y }}
+        style={{ width, borderRadius }}
         className="bg-yellow-orange text-everglade relative z-3 mx-auto min-h-[80svh] overflow-hidden px-6 py-12 max-md:w-full! max-md:transform-[translateY(0)]! max-md:rounded-none! md:min-w-fit [&_img]:h-10"
       >
         <Logo className="**:fill-everglade! mx-auto my-12 h-16 w-auto max-w-5/6" />
