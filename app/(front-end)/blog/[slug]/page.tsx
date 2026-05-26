@@ -1,5 +1,6 @@
 // import BlockRenderer from '@/components/blocks/BlockRenderer';
 import { CustomRichText } from "@/components/blocks/RichTextConverter";
+import DivFadeIn from "@/components/DivFadeIn";
 import { getDocBySlug } from "@/lib/local-api";
 import { cn } from "@/lib/utils";
 
@@ -36,7 +37,7 @@ export default async function PostPage({
   if (!doc) return "Not found.";
   const publishDate = new Date(doc.createdAt);
   return (
-    <div className="mx-auto w-fit">
+    <DivFadeIn className="mx-auto w-fit">
       <div className="flex flex-wrap items-center gap-2 gap-y-1 p-6 text-xs tracking-wider uppercase opacity-30 duration-200 hover:opacity-100 sm:justify-center sm:text-center lg:py-8">
         <Link href="/" className="text-everglade hover:text-everglade-600">
           Observatório de Violência Política de Gênero
@@ -54,7 +55,7 @@ export default async function PostPage({
       >
         <div className="prose lg:prose-lg xl:prose-xl prose-headings:font-medium prose-a:duration-75 prose-a:decoration-yellow-orange prose-a:hover:text-everglade decoration-everglade prose-a:decoration-[0.2ex] prose-a:underline-offset-[0.2ex] text-pretty">
           <h1 className="mb-5!">{doc.name}</h1>
-          <p className="text-muted-foreground my-0!">
+          <p className="text-muted-foreground my-0! mb-12! text-sm! tracking-widest uppercase">
             {publishDate.toLocaleDateString("pt-BR", {
               day: "numeric",
               month: "long",
@@ -69,6 +70,6 @@ export default async function PostPage({
           <CustomRichText lexicalData={doc.body as any} />
         </div>
       </div>
-    </div>
+    </DivFadeIn>
   );
 }

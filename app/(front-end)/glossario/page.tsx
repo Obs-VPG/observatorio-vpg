@@ -1,4 +1,5 @@
 import { definedTermsOptions } from "@/collections/DefinedTerms";
+import DivFadeIn from "@/components/DivFadeIn";
 import GlossaryTerm from "@/components/GlossaryTerm";
 import GlossaryTermCategory from "@/components/GlossaryTermCategory";
 import { getDocBySlug } from "@/lib/local-api";
@@ -22,7 +23,7 @@ export default async function Glossario(props: GlossarioProps) {
   if (!termos.docs) return null;
   const groups = Object.groupBy(termos.docs, (e) => e.additionalType);
   return (
-    <>
+    <DivFadeIn>
       <div className="mb-[20vh] px-6 py-16 md:hidden md:px-10 xl:px-16">
         <h1 className="text-[15svw] font-medium lg:text-9xl">Glossário</h1>
         <p className="text-muted-foreground">
@@ -48,6 +49,6 @@ export default async function Glossario(props: GlossarioProps) {
           );
         })}
       </div>
-    </>
+    </DivFadeIn>
   );
 }
