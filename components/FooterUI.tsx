@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useScroll, useTransform, motion, cubicBezier } from "motion/react";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  cubicBezier,
+  easeIn,
+} from "motion/react";
 import { usePathname } from "next/navigation";
 import { useRef } from "react";
 import neim from "@/public/logos/neim.jpg";
@@ -41,25 +47,27 @@ export default function Footer(props: FooterProps) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 80%", "start center"],
+    offset: ["start center", "start 20%"],
   });
-  const { scrollYProgress: scrollYProgress2 } = useScroll({
-    target: ref,
-    offset: ["start center", "end center"],
-  });
-  const { width, borderRadius } = useTransform(scrollYProgress, [0, 1], {
-    width: ["50%", "100%"],
-    borderRadius: ["2rem", "0rem"],
-  });
+  const { width, borderRadius, y } = useTransform(
+    scrollYProgress,
+    [0, 1],
+    {
+      width: ["50%", "100%"],
+      borderRadius: ["100%", "0%"],
+      y: [200, 0],
+    },
+    { ease: easeIn },
+  );
   return (
     <footer>
       <motion.div
         ref={ref}
-        style={{ width, borderRadius }}
-        className="bg-light-green relative z-3 mx-auto overflow-hidden px-6 py-12 max-md:w-full! max-md:rounded-none! md:min-w-fit [&_img]:h-10"
+        style={{ width, borderRadius, y }}
+        className="bg-yellow-orange text-everglade relative z-3 mx-auto min-h-[80svh] overflow-hidden px-6 py-12 max-md:w-full! max-md:transform-[translateY(0)]! max-md:rounded-none! md:min-w-fit [&_img]:h-10"
       >
-        <Logo className="mx-auto my-12 h-16 w-auto max-w-5/6" />
-        <hr className="my-16" />{" "}
+        <Logo className="**:fill-everglade! mx-auto my-12 h-16 w-auto max-w-5/6" />
+        <hr className="border-yellow-orange-400 my-16" />{" "}
         <div className="mt-16 grid items-center justify-center md:flex">
           {menu.map((menuItem) => {
             return (
@@ -81,8 +89,8 @@ export default function Footer(props: FooterProps) {
             );
           })}
         </div>
-        <hr className="my-16" />
-        <div className="flex flex-col justify-center gap-12 mix-blend-multiply md:flex-row">
+        <hr className="border-yellow-orange-400 my-16" />
+        <div className="flex flex-col justify-center gap-12 opacity-80 mix-blend-multiply md:flex-row">
           <div className="flex flex-col items-center gap-4 md:items-start">
             <div className="text-xs tracking-widest uppercase opacity-80">
               Realização
@@ -139,7 +147,7 @@ export default function Footer(props: FooterProps) {
             </div>
           </div>
         </div>
-        <p className="text-muted-foreground mt-12 w-full text-center text-xs leading-loose">
+        <p className="mt-24 w-full text-center text-xs leading-loose opacity-80">
           Observatório de Violência Política de Gênero | Núcleo de Estudos
           Interdisciplinares sobre a Mulher - Universidade Federal da Bahia{" "}
           <br />

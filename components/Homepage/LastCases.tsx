@@ -17,6 +17,7 @@ import Pin from "../Pin";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 export type LastCasesProps = { cases: Case[] };
 
@@ -43,24 +44,7 @@ export default function LastCases(props: LastCasesProps) {
   return (
     <div className="px-6 py-[10svh] md:px-10 xl:px-16">
       <div className="bg-light-green items-center justify-center gap-8 rounded-2xl p-3 md:grid md:grid-cols-2">
-        <div className="block pb-8 md:pb-16">
-          <div className="text-yellow-orange mt-4 flex items-center justify-center gap-8 md:mb-8">
-            <button className="hover:text-everglade flex size-16 cursor-pointer items-center justify-center rounded-full pr-1 duration-200 hover:bg-white">
-              <ChevronLeft
-                className="size-8"
-                onClick={() => api?.scrollPrev()}
-              />
-            </button>
-            <p className="text-center text-xs font-medium tracking-wider text-stone-800 uppercase">
-              Últimos casos registrados
-            </p>
-            <button
-              className="hover:text-everglade flex size-16 cursor-pointer items-center justify-center rounded-full pl-1 duration-200 hover:bg-white"
-              onClick={() => api?.scrollNext()}
-            >
-              <ChevronRight className="size-8" />
-            </button>
-          </div>
+        <div className="block">
           <Carousel
             setApi={setApi}
             opts={{ loop: true }}
@@ -71,6 +55,23 @@ export default function LastCases(props: LastCasesProps) {
               Fade(),
             ]}
           >
+            <div className="text-yellow-orange mb-4 flex items-center justify-center gap-8">
+              <button className="hover:text-everglade flex size-12 cursor-pointer items-center justify-center rounded-full pr-1 duration-200 hover:bg-white">
+                <ChevronLeft
+                  className="size-8"
+                  onClick={() => api?.scrollPrev()}
+                />
+              </button>
+              <p className="text-center text-xs font-medium tracking-wider text-stone-800 uppercase">
+                Últimos casos registrados
+              </p>
+              <button
+                className="hover:text-everglade flex size-12 cursor-pointer items-center justify-center rounded-full pl-1 duration-200 hover:bg-white"
+                onClick={() => api?.scrollNext()}
+              >
+                <ChevronRight className="size-8" />
+              </button>
+            </div>
             <CarouselContent className="">
               {cases.map((doc, index) => {
                 const startDate = doc.startDate
@@ -128,8 +129,19 @@ export default function LastCases(props: LastCasesProps) {
                 );
               })}
             </CarouselContent>
-            {/* <CarouselPrevious />
-            <CarouselNext /> */}
+
+            <div className="mt-8 mb-4 flex justify-center gap-2">
+              {cases.map((c, index) => (
+                <button
+                  className={cn(
+                    "bg-everglade/30 hover:bg-everglade/80 h-2 w-8 cursor-pointer rounded-xs duration-75",
+                    current - 1 === index && "bg-everglade",
+                  )}
+                  key={`dot-${c.id}`}
+                  onClick={() => api?.scrollTo(index)}
+                ></button>
+              ))}
+            </div>
           </Carousel>
         </div>
         <div className="relative h-96 max-h-132 overflow-hidden rounded-xl md:block md:h-full">
