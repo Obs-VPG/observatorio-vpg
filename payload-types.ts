@@ -4171,13 +4171,7 @@ export interface DefinedTerm {
   slug: string;
   description?: string | null;
   additionalType:
-    | 'intersection'
-    | 'offenseType'
-    | 'actors'
-    | 'genderIdentity'
-    | 'racialIdentity'
-    | 'ageGroup'
-    | 'sexualOrientation';
+    'intersection' | 'offenseType' | 'actors' | 'genderIdentity' | 'racialIdentity' | 'ageGroup' | 'sexualOrientation';
   updatedAt: string;
   createdAt: string;
 }

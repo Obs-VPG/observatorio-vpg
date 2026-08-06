@@ -1,4 +1,4 @@
-import sharp from "sharp";
+
 
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
@@ -70,6 +70,5 @@ export default buildConfig({
   //     defaultFromName: 'Site INCT Antirracismo',
   //     apiKey: process.env.RESEND_API_KEY || ''
   //   }),
-  // If you want to resize images, crop, set focal point, etc.
-  sharp,
+
 });
