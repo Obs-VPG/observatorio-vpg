@@ -9,6 +9,8 @@ const payload = await getPayload({ config });
 
 export const metadata: Metadata = {
   title: "Observatório de Violência Política de Gênero",
+  description:
+    "Uma iniciativa NEIM-UFBA para a promoção de um ambiente político justo e seguro para pessoas de todos os gêneros.",
 };
 
 export default async function IndexPage({}) {
