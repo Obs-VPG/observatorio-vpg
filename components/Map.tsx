@@ -122,7 +122,10 @@ export default function MapComponent({
         zoom: 2.5,
       }}
       style={{ width: "100%", height: "100%" }}
-      mapStyle={mapStyle as StyleSpecification}
+      // mapStyle={mapStyle as StyleSpecification}
+      mapStyle={
+        "https://api.maptiler.com/maps/019ff13d-04c2-75bb-b4dd-c57349ef3f7e/style.json?key=E18e9Ku9PccdMIbYJCZ9"
+      }
       interactiveLayerIds={
         [clusterLayer.id, unclusteredPointLayer.id] as string[]
       }

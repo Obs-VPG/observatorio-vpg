@@ -168,7 +168,10 @@ export default function LastCases(props: LastCasesProps) {
             scrollZoom={false}
             doubleClickZoom={false}
             dragRotate={false}
-            mapStyle={mapStyle as StyleSpecification}
+            // mapStyle={mapStyle as StyleSpecification}
+            mapStyle={
+              "https://api.maptiler.com/maps/019ff13d-04c2-75bb-b4dd-c57349ef3f7e/style.json?key=E18e9Ku9PccdMIbYJCZ9"
+            }
           >
             {currentCase ? (
               <Marker
